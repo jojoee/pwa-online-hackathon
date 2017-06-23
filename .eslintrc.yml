@@ -9,6 +9,7 @@ rules:
   space-before-function-paren: 0
   comma-dangle: 0
   one-var: 0
+  padded-blocks: 0
 env:
   mocha: true
   amd: true
