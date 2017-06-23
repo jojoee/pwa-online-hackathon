@@ -21,4 +21,4 @@ coverage
 yarn.lock
 
 # Note
-README*.md
+README-*.md
