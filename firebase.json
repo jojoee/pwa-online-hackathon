@@ -1,0 +1,22 @@
+{
+  "database": {
+    "rules": "database.rules.json"
+  },
+  "hosting": {
+    "public": "/",
+    "ignore": [
+      "firebase.json",
+      ".nyc_output/**",
+      "coverage/**",
+      "tool/**",
+      "**/node_modules/**",
+      "**/**.lock",
+      "**/**.log",
+      "**/.*",
+      "bower.json",
+      "package.json",
+      "**/**.md",
+      "LICENSE"
+    ]
+  }
+}

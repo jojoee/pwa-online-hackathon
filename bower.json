@@ -1,0 +1,17 @@
+{
+  "name": "pwa-online-hackathon",
+  "homepage": "https://github.com/jojoee/pwa-online-hackathon",
+  "authors": [
+    "Nathachai Thongniran <inid3a@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

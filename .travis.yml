@@ -1,0 +1,22 @@
+sudo: false
+language: node_js
+node_js:
+  - "6"
+  - "7"
+  - "8"
+cache:
+  directories:
+    - node_modules
+branches:
+  except:
+    - /^v\d+\.\d+\.\d+$/
+notifications:
+  email: false
+before_script:
+  - npm prune
+script:
+  - npm run coverage
+  - npm run coverage.check
+after_success:
+  - npm run coverage.report
+  - npm run semantic-release

@@ -1,0 +1,24 @@
+# Dependency
+node_modules
+bower_components
+
+# IDE or Editor
+.vscode
+
+# Backup
+bk*
+
+# Log
+npm-debug.log
+firebase-debug.log
+
+# Report
+coverage
+.nyc_output
+*.report.dom.html
+
+# Lock
+yarn.lock
+
+# Note
+README*.md
