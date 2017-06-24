@@ -1,6 +1,6 @@
 {
   "name": "Public transportation: clicker / idle ",
-  "short_name": "Public transportation",
+  "short_name": "Public trans",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#505050",
@@ -32,6 +32,7 @@
     "type": "image/png"
   }],
   "related_applications": [{
-    "platform": "web"
+    "platform": "web",
+    "url": "https://pwa-online-hackathon-ae5f6.firebaseapp.com/"
   }]
 }
