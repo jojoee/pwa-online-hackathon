@@ -55,7 +55,7 @@ function addStarWeather() {
       {
         starSpeed: 0.015,
         starRadius: 0.4,
-        nStars: 320,
+        nStars: 120,
       },
       {
         starSpeed: 0.03,
@@ -104,7 +104,7 @@ function handleClick(e) {
   var cX = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft - c.offsetLeft,
     cY = e.clientY + document.body.scrollTop + document.documentElement.scrollTop - c.offsetTop,
     mousePos = new Position(cX, cY),
-    killRadius = 80,
+    killRadius = 120,
     i = 0;
 
   if (isGameOver) {
@@ -277,7 +277,7 @@ function update(dt) {
       var x = chance.integer({ min: 0.8 * width, max: 1.2 * width }),
         y = chance.integer({ min: -0.2 * height, max: 0 }),
         meteor = new Meteor(x, y),
-        mag = chance.integer({ min: 15, max: 30 }),
+        mag = chance.integer({ min: 5, max: 10 }),
         rad = Util.getRadian(new Position(x, -(height + y)));
 
       meteor.setVelByMag(mag);
