@@ -20,7 +20,7 @@ var meteors = [],
   life,
   point,
   timestamp = {
-    weather: Util.getCurrentUtcTimestamp() - delay.weather,
+    weather: 0,
   };
 
 // firebase
@@ -90,8 +90,18 @@ function changeWeather() {
   addStarWeather();
 }
 
+/* ================================================================ Event
+*/
 
 function handleClick(e) {
+  var cX = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft - c.offsetLeft,
+    cY = e.clientY + document.body.scrollTop + document.documentElement.scrollTop - c.offsetTop,
+    mousePos = new Position(cX, cY),
+    i = 0;
+
+  if (isOver) {
+    resetGame();
+  }
 }
 
 // https://davidwalsh.name/javascript-debounce-function
@@ -117,6 +127,33 @@ function updateCanvasSize() {
   timestamp.weather = Util.getCurrentUtcTimestamp();
 }
 
+/* ================================================================ Game
+*/
+
+function resetGame() {
+  meteors = [];
+  weatherEntities = [];
+  isOver = false;
+  life = 1;
+  point = 0;
+  timestamp = {
+    weather: Util.getCurrentUtcTimestamp() - delay.weather,
+  };
+}
+
+function gameOver() {
+  var metaY = 100;
+
+  isOver = true;
+
+  // render
+  ctx.font = 'bold 16px Monospace';
+  ctx.fillStyle = '#fff';
+  ctx.textAlign = 'center';
+  ctx.fillText('Press any key to', width / 2, metaY += 16);
+  ctx.fillText('continue, point: ' + point, width / 2, metaY += 16);
+}
+
 /* ================================================================ Engine
 */
 
@@ -129,6 +166,7 @@ function boot() {
 function create() {
   var i = 0;
 
+  this.resetGame();
   c.addEventListener('click', handleClick);
 }
 
@@ -170,7 +208,7 @@ function update(dt) {
       life--;
       if (life <= 0) {
         life = 0;
-        isOver = true;
+        gameOver();
       }
     }
   }
@@ -195,7 +233,6 @@ function render(dt) {
     i = 0;
 
   if (isOver) {
-    // render game over screen
     return;
   }
 
