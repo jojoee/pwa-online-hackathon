@@ -12,5 +12,18 @@
 </head>
 <body>
   <script type="text/javascript" src="/dist/js/main.min.js"></script>
+  <script>
+  // serviceWorker
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/serviceWorker.js', { scope: '/' })
+      .then(function() {
+        console.log('serviceWorker: registered');
+      });
+
+    navigator.serviceWorker.ready.then(function() {
+        console.log('serviceWorker: ready');
+      });
+  }
+  </script>
 </body>
 </html>

@@ -13,10 +13,14 @@ var filesToCache = [
 self.addEventListener('install', function(e) {
   console.log('serviceWorker: install');
 
-  e.waitUntil(caches.open(cacheAssetKey).then(function(cache) {
-    console.log('serviceWorker: caching app shell');
-    return cache.addAll(filesToCache);
-  }));
+  e.waitUntil(caches.open(cacheAssetKey)
+    .then(function(cache) {
+      console.log('serviceWorker: caching app shell');
+      return cache.addAll(filesToCache)
+        .then(function() {
+          self.skipWaiting();
+        });
+    }))
 });
 
 // cache / load API
