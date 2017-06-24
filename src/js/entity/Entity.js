@@ -17,6 +17,9 @@ class Vector extends Position {
 
 }
 
+/* ================================================================ Game
+*/
+
 // @todo this should be interface
 class GameEntity {
 
@@ -25,25 +28,6 @@ class GameEntity {
     this.vel = new Vector(0, 0);
     this.rad = 0;
     this.opacity = 1;
-  }
-
-  render() {
-
-  }
-
-  update(dt) {
-
-  }
-}
-
-// @todo this should be interface
-class StarEntity extends GameEntity {
-
-  constructor(x, y) {
-    super(x, y);
-    this.opacity = 0;
-
-    // specific
     this.stateKey = {
       fadeIn: 1,
       fadeOut: 2,
@@ -51,6 +35,10 @@ class StarEntity extends GameEntity {
       stable: 4,
     };
     this.state = this.stateKey.stable;
+  }
+
+  render() {
+
   }
 
   update(dt) {
@@ -78,20 +66,6 @@ class StarEntity extends GameEntity {
     }
   }
 
-  setVelByRad(rad) {
-    var mag = Util.getMagnitude(this.vel);
-
-    this.vel.x = Math.cos(rad) * mag;
-    this.vel.y = Math.sin(rad) * mag;
-  }
-
-  setVelByMag(mag) {
-    var rad = Util.getRadian(this.vel);
-
-    this.vel.x = Math.cos(rad) * mag;
-    this.vel.y = Math.sin(rad) * mag;
-  }
-
   fadeOut() {
     this.state = this.stateKey.fadeOut;
   }
@@ -106,6 +80,37 @@ class StarEntity extends GameEntity {
 
   isDead() {
     return this.state === this.stateKey.dead;
+  }
+}
+
+/* ================================================================ Star
+*/
+
+// @todo this should be interface
+class StarEntity extends GameEntity {
+
+  constructor(x, y) {
+    super(x, y);
+    this.opacity = 0;
+    this.state = this.stateKey.stable;
+  }
+
+  update(dt) {
+    super.update(dt);
+  }
+
+  setVelByRad(rad) {
+    var mag = Util.getMagnitude(this.vel);
+
+    this.vel.x = Math.cos(rad) * mag;
+    this.vel.y = Math.sin(rad) * mag;
+  }
+
+  setVelByMag(mag) {
+    var rad = Util.getRadian(this.vel);
+
+    this.vel.x = Math.cos(rad) * mag;
+    this.vel.y = Math.sin(rad) * mag;
   }
 }
 
@@ -210,5 +215,32 @@ class Meteor extends StarEntity {
    */
   isPassBoundary() {
     return this.pos.x < 0 || this.pos.y > height;
+  }
+}
+
+/* ================================================================ Effect
+*/
+
+class Bomb extends GameEntity {
+
+  constructor(x, y, radius) {
+    super(x, y);
+    this.opacity = 0.2;
+    this.state = this.stateKey.fadeOut;
+
+    // specific
+    this.radius = radius;
+  }
+
+  update(dt) {
+    super.update(dt);
+  }
+
+  render() {
+    super.render();
+    ctx.beginPath();
+    ctx.fillStyle = 'rgba(255, 221, 157, ' + this.opacity + ')';
+    ctx.arc(this.pos.x, this.pos.y, this.radius, 0, Math.PI * 2, false);
+    ctx.fill();
   }
 }

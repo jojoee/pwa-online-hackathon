@@ -1,4 +1,4 @@
-/* global Position, _, GameEntity, chance, Meteor, Star, Util, firebase */
+/* global Position, _, GameEntity, chance, Meteor, Star, Bomb, Util, firebase */
 /* eslint no-unused-vars: 0 */
 
 // Engine required
@@ -15,7 +15,8 @@ const isDebug = true,
   };
 
 // Game animation support
-var weatherEntities = [];
+var weatherEntities = [],
+  effectEntities = [];
 
 // Game var
 var meteors = [],
@@ -100,10 +101,16 @@ function handleClick(e) {
   var cX = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft - c.offsetLeft,
     cY = e.clientY + document.body.scrollTop + document.documentElement.scrollTop - c.offsetTop,
     mousePos = new Position(cX, cY),
+    killRadius = 80,
     i = 0;
 
   if (isGameOver) {
     resetGame();
+
+  } else {
+    var entity = new Bomb(mousePos.x, mousePos.y, killRadius);
+    effectEntities.push(entity);
+
   }
 }
 
@@ -176,6 +183,7 @@ function renderMeta(fps) {
     ctx.fillText('FPS:' + fps, metaX, metaY += 16);
     ctx.fillText('nMeteors:' + meteors.length, metaX, metaY += 16);
     ctx.fillText('nWeatherEntities:' + weatherEntities.length, metaX, metaY += 16);
+    ctx.fillText('nEffectEntities:' + effectEntities.length, metaX, metaY += 16);
     ctx.fillText('nFadeOutMeteors:' + fadeOutMeteors.length, metaX, metaY += 16);
     ctx.fillText('nFadeOutWeatherEntities:' + fadeOutWeatherEntities.length, metaX, metaY += 16);
   }
@@ -238,6 +246,14 @@ function update(dt) {
     }
   }
 
+  // effect
+  for (i = 0; i < effectEntities.length; i++) {
+    effectEntities[i].update();
+    if (effectEntities[i].isDead()) {
+      effectEntities.splice(i--, 1);
+    }
+  }
+
   // randomly spam meteor
   // @todo increase spam rate and spam range's width by with player point
   if (!isGameOver) {
@@ -272,6 +288,11 @@ function render(dt) {
   // meteor
   for (i = 0; i < meteors.length; i++) {
     meteors[i].render();
+  }
+
+  // effect
+  for (i = 0; i < effectEntities.length; i++) {
+    effectEntities[i].render();
   }
 
   // game over
