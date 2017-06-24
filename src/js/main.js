@@ -230,6 +230,8 @@ function update(dt) {
 
 function render(dt) {
   var fps = (1 / dt).toFixed(2),
+    metaX = 10,
+    metaY = 120,
     i = 0;
 
   if (isOver) {
@@ -249,19 +251,21 @@ function render(dt) {
     meteors[i].render();
   }
 
-  // meta for debug
+  // meta
+  ctx.font = 'bold 16px Monospace';
+  ctx.fillStyle = '#fff';
+  ctx.textAlign = 'start';
+  ctx.fillText('life:' + life, metaX, metaY += 16);
+  ctx.fillText('point:' + point, metaX, metaY += 16);
+
   if (isDebug) {
-    var metaX = 10,
-      metaY = 120,
-      fadeOutWeatherEntities = weatherEntities.filter(function(entity) {
+    var fadeOutWeatherEntities = weatherEntities.filter(function(entity) {
         return entity.isFadeOut();
       }),
       fadeOutMeteors = meteors.filter(function(entity) {
         return entity.isFadeOut();
       });
 
-    ctx.font = 'bold 16px Monospace';
-    ctx.fillStyle = '#fff';
     ctx.fillText('FPS:' + fps, metaX, metaY += 16);
     ctx.fillText('nMeteors:' + meteors.length, metaX, metaY += 16);
     ctx.fillText('nWeatherEntities:' + weatherEntities.length, metaX, metaY += 16);
