@@ -66,7 +66,7 @@ Public transportation: clicker / idle game
 ```
 Before commit please run command below to check
 - `yarn validate`
-- `lighthouse http://localhost:5000 --view`
+- `lighthouse http://localhost:5000 --view --output-path=./lighthouse/result.html`
 
 and commit with `yarn commit` instead of git commit
 ```
