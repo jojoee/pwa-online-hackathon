@@ -19,26 +19,12 @@ var entities = [],
   config = {
     currentWeather: 1,
   },
-  weatherKey = {
-    snow: 1,
-    star: 2, // is star should be weather ?
-  },
   timestamp = {
     weather: Util.getCurrentUtcTimestamp() - delay.weather,
   };
 
 /* ================================================================ Weather
 */
-
-function addSnowWeather() {
-  var i = 0,
-    n = 160;
-
-  for (i = 0; i < n; i++) {
-    var entity = new Snow();
-    weatherEntities.push(entity);
-  }
-}
 
 function addStarWeather() {
   var i = 0,
@@ -76,26 +62,17 @@ function addStarWeather() {
   }
 }
 
+// is star should be weather ?
 function changeWeather() {
   // @todo need to refactor
-  var i = 0,
-    weatherIndex = chance.integer({ min: 1, max: 2 });
-
-  console.log('changeWeather');
+  var i = 0;
 
   // fade out existing entities
   for (i = 0; i < weatherEntities.length; i++) {
     weatherEntities[i].fadeOut();
   }
 
-  switch (weatherIndex) {
-    case weatherKey.snow:
-      addSnowWeather();
-      break;
-    case weatherKey.star:
-      addStarWeather();
-      break;
-  }
+  addStarWeather();
 }
 
 function handleInput(keyCode) {
