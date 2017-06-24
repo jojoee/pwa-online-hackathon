@@ -114,6 +114,10 @@ function updateCanvasSize() {
   height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0) - padding;
   c.width = width;
   c.height = height;
+
+  // change weather + update timestamp
+  changeWeather();
+  timestamp.weather = Util.getCurrentUtcTimestamp();
 }
 
 /* ================================================================ Engine
@@ -141,10 +145,8 @@ function update(dt) {
 
   // change weather
   if (utc > timestamp.weather + delay.weather) {
-    // change weather
+    // change weather + update timestamp
     changeWeather();
-
-    // update ts
     timestamp.weather = utc;
   }
 
