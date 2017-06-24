@@ -19,6 +19,9 @@ var styleFiles = [
     './src/js/static/Util.js',
     './src/js/main.js',
     './src/js/engine/Engine.js',
+  ],
+  imageFiles = [
+    './src/image/**/*.png',
   ];
 
 function handleError(err) { // eslint-disable-line
@@ -49,10 +52,16 @@ gulp.task('script', function () {
     .pipe(gulp.dest('dist/js'));
 });
 
+gulp.task('image', function () {
+  return gulp.src(imageFiles)
+    .pipe(gulp.dest('dist/image'));
+});
+
 gulp.task('watch', function () {
   gulp.watch('./src/css/**/*.css', ['style']);
   gulp.watch('./src/js/**/*.js', ['script']);
+  gulp.watch('./src/image/**/*.png', ['image']);
 });
 
-gulp.task('build', ['style', 'script']);
-gulp.task('default', ['watch']);
+gulp.task('build', ['style', 'script', 'image']);
+gulp.task('default', ['build', 'watch']);

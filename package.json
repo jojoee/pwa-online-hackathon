@@ -36,7 +36,7 @@
     "dev": "npm-run-all --parallel eslint.watch gulp.watch",
     "eslint": "esw src/js/**/*.js --color",
     "eslint.watch": "npm run eslint -- --watch",
-    "gulp.watch": "gulp watch",
+    "gulp.watch": "gulp",
     "htmlhint": "htmlhint index.html",
     "setup": "npm install && npm run validate",
     "stylelint": "stylelint src/css/*.css",
