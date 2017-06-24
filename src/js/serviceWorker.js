@@ -5,12 +5,8 @@ var cacheAssetKey = '0.0.0',
 var filesToCache = [
   '/',
   '/index.html',
-  '/src/css/main.css',
-  '/src/js/entity/Entity.js',
-  '/src/js/static/Resource.js',
-  '/src/js/static/Util.js',
-  '/src/js/main.js',
-  '/src/js/engine/Engine.js',
+  '/dist/css/main.min.css',
+  '/dist/js/main.min.js',
 ];
 
 // cache / load asset (app shell)
