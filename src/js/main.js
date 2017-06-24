@@ -185,3 +185,11 @@ function render(dt) {
     ctx.fillText('nFadeOutWeatherEntities:' + fadeOutWeatherEntities.length, metaX, metaY += 16);
   }
 }
+
+// serviceWorker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/src/js/serviceWorker.js')
+    .then(function() {
+      console.log('serviceWorker: registered');
+    });
+}

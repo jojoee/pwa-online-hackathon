@@ -13,3 +13,4 @@ rules:
 env:
   mocha: true
   amd: true
+  browser: true
