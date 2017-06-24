@@ -16,9 +16,6 @@ const isDebug = true,
 
 var meteors = [],
   weatherEntities = [],
-  config = {
-    currentWeather: 1,
-  },
   timestamp = {
     weather: Util.getCurrentUtcTimestamp() - delay.weather,
   };
@@ -90,9 +87,6 @@ function changeWeather() {
   addStarWeather();
 }
 
-function handleInput(keyCode) {
-
-}
 
 function handleClick(e) {
 }
@@ -133,9 +127,6 @@ function create() {
   var i = 0;
 
   c.addEventListener('click', handleClick);
-  document.addEventListener('keyup', function(e) {
-    handleInput(e.keyCode);
-  });
 }
 
 function update(dt) {
@@ -175,15 +166,11 @@ function update(dt) {
   if (chance.bool({ likelihood: 20 })) {
     var x = chance.integer({ min: 0.8 * width, max: 1.2 * width }),
       y = chance.integer({ min: -0.2 * height, max: 0 }),
-      // starPos = new Position(x, y),
-      // targetPos = new Position(0, height),
       meteor = new Meteor(x, y),
       mag = chance.integer({ min: 15, max: 30 }),
-      // newRad = Util.getRadian(targetPos, starPos),
       rad = Util.getRadian(new Position(x, -(height + y)));
 
     meteor.setVelByMag(mag);
-    // meteor.setVelByRad(newRad);
     meteor.setVelByRad(rad);
     meteors.push(meteor);
   }
