@@ -22,7 +22,10 @@ var weatherEntities = [],
 var meteors = [],
   isGameOver = false,
   life,
-  point,
+  score,
+  userData = {
+    highScore: 0,
+  },
   timestamp = {
     weather: 0,
   };
@@ -116,6 +119,7 @@ function handleClick(e) {
 
       if (dist < killRadius) {
         // @todo render bomb particles
+        score++;
         meteors.splice(i--, 1);
       }
     }
@@ -153,7 +157,7 @@ function resetGame() {
   meteors = [];
   isGameOver = false;
   life = 1;
-  point = 0;
+  score = 0;
   timestamp = {
     weather: Util.getCurrentUtcTimestamp() - delay.weather,
   };
@@ -167,7 +171,7 @@ function renderGameOverScreen() {
   ctx.fillStyle = '#fff';
   ctx.textAlign = 'center';
   ctx.fillText('Press any key to', width / 2, metaY += 16);
-  ctx.fillText('continue, point: ' + point, width / 2, metaY += 16);
+  ctx.fillText('continue, score: ' + score, width / 2, metaY += 16);
 }
 
 function renderMeta(fps) {
@@ -178,7 +182,8 @@ function renderMeta(fps) {
   ctx.fillStyle = '#fff';
   ctx.textAlign = 'start';
   ctx.fillText('life:' + life, metaX, metaY += 16);
-  ctx.fillText('point:' + point, metaX, metaY += 16);
+  ctx.fillText('score:' + score, metaX, metaY += 16);
+  ctx.fillText('high score:' + userData.highScore, metaX, metaY += 16);
 
   if (isDebug) {
     var fadeOutWeatherEntities = weatherEntities.filter(function(entity) {
@@ -250,6 +255,9 @@ function update(dt) {
       if (life <= 0) {
         life = 0;
         isGameOver = true;
+        userData.highScore = (score > userData.highScore)
+          ? score
+          : userData.highScore;
       }
     }
   }
@@ -263,7 +271,7 @@ function update(dt) {
   }
 
   // randomly spam meteor
-  // @todo increase spam rate and spam range's width by with player point
+  // @todo increase spam rate / spam range's width / speed by with player score
   if (!isGameOver) {
     if (chance.bool({ likelihood: 1 })) {
       var x = chance.integer({ min: 0.8 * width, max: 1.2 * width }),
