@@ -1,4 +1,4 @@
-/* global Position, _, GameEntity, chance, Snow, Star, Util */
+/* global Position, _, GameEntity, chance, Snow, Star, Util, firebase */
 /* eslint no-unused-vars: 0 */
 
 // Engine required
@@ -22,6 +22,21 @@ var entities = [],
   timestamp = {
     weather: Util.getCurrentUtcTimestamp() - delay.weather,
   };
+
+// firebase
+var firebaseConfig = {
+  apiKey: 'AIzaSyDN74C2v5IE6lPzAzGQ1aGQ6MQNujvKwKA',
+  authDomain: 'pwa-online-hackathon-ae5f6.firebaseapp.com',
+  databaseURL: 'https://pwa-online-hackathon-ae5f6.firebaseio.com',
+  projectId: 'pwa-online-hackathon-ae5f6',
+  storageBucket: 'pwa-online-hackathon-ae5f6.appspot.com',
+  messagingSenderId: '390428073562',
+};
+
+/* ================================================================ Firebase
+*/
+
+firebase.initializeApp(firebaseConfig);
 
 /* ================================================================ Weather
 */
