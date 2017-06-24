@@ -153,6 +153,8 @@ class Meteor extends StarEntity {
     // specific
     this.tailLength = 5;
     this.trailLengthDt = 0;
+    // @todo update naming
+    this.isCounted = false;
   }
 
   update(dt) {
@@ -162,7 +164,7 @@ class Meteor extends StarEntity {
     this.trailLengthDt += 0.01;
 
     if (this.state === this.stateKey.stable &&
-      this.pos.y > 2 * height) {
+      (this.pos.x < -0.2 * width || this.pos.y > 1.2 * height)) {
       this.state = this.stateKey.fadeOut;
     }
   }
@@ -201,5 +203,12 @@ class Meteor extends StarEntity {
     ctx.lineTo(x + 1, y + 1);
     ctx.closePath();
     ctx.fill();
+  }
+
+  /**
+   * @returns {boolean}
+   */
+  isPassBoundary() {
+    return this.pos.x < 0 || this.pos.y > height;
   }
 }

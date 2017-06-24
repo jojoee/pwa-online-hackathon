@@ -16,6 +16,9 @@ const isDebug = true,
 
 var meteors = [],
   weatherEntities = [],
+  isOver = false,
+  life,
+  point,
   timestamp = {
     weather: Util.getCurrentUtcTimestamp() - delay.weather,
   };
@@ -134,6 +137,8 @@ function update(dt) {
     j = 0,
     utc = Util.getCurrentUtcTimestamp();
 
+  if (isOver) return;
+
   // change weather
   if (utc > timestamp.weather + delay.weather) {
     // change weather + update timestamp
@@ -155,9 +160,18 @@ function update(dt) {
   for (i = 0; i < meteors.length; i++) {
     meteors[i].update();
 
-    // remove when it gone
     if (meteors[i].isDead()) {
+      // remove when it gone
       meteors.splice(i--, 1);
+
+    } else if (meteors[i].isPassBoundary() && !meteors[i].isCounted) {
+      meteors[i].isCounted = true;
+      // reduce life
+      life--;
+      if (life <= 0) {
+        life = 0;
+        isOver = true;
+      }
     }
   }
 
@@ -179,6 +193,11 @@ function update(dt) {
 function render(dt) {
   var fps = (1 / dt).toFixed(2),
     i = 0;
+
+  if (isOver) {
+    // render game over screen
+    return;
+  }
 
   // clear
   ctx.clearRect(0, 0, c.width, c.height);
