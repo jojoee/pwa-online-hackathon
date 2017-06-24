@@ -7,3 +7,47 @@ body {
   background-color: #505050;
   font-family: sans-serif;
 }
+
+#top {
+  position: relative;
+  height: 42px;
+  background-color: #3e3e3e;
+  width: 100%;
+  border-bottom: 2px solid #444;
+  color: #fff;
+}
+
+#user-pic {
+  top: 2px;
+  width: 33px;
+  height: 33px;
+  background-size: 33px;
+  border-radius: 20px;
+  float: left;
+}
+
+#user-name {
+  font-size: 16px;
+  line-height: 42px;
+  float: left;
+}
+
+.sign-btn {
+  color: #fff;
+  float: right;
+  border: none;
+  background: 0;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  overflow: hidden;
+  line-height: 42px;
+  outline: none;
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
