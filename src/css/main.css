@@ -6,4 +6,7 @@ body {
 body {
   background-color: #505050;
 }
+
+.open-sans {
+  font-family: 'Open Sans', sans-serif;
 }
