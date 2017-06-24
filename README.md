@@ -3,7 +3,6 @@
 [![Travis](https://img.shields.io/travis/jojoee/pwa-online-hackathon.svg)](https://travis-ci.org/jojoee/pwa-online-hackathon)
 [![Codecov](https://img.shields.io/codecov/c/github/jojoee/pwa-online-hackathon.svg)](https://codecov.io/github/jojoee/pwa-online-hackathon)
 [![License](https://img.shields.io/github/license/mashape/apistatus.svg)](http://opensource.org/licenses/MIT)
-[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Checklist
@@ -73,8 +72,6 @@ and commit with `yarn commit` instead of git commit
 
 ## Getting started for owner
 ```
-$ npm install -g semantic-release-cli
-$ semantic-release-cli setup
 $ firebase login
 $ firebase init
 $ firebase deploy # to deploy on Firebase hosting
