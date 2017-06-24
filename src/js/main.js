@@ -155,6 +155,32 @@ function gameOver() {
   ctx.fillText('continue, point: ' + point, width / 2, metaY += 16);
 }
 
+function renderMeta(fps) {
+  var metaX = 10,
+    metaY = 120;
+
+  ctx.font = 'bold 16px Monospace';
+  ctx.fillStyle = '#fff';
+  ctx.textAlign = 'start';
+  ctx.fillText('life:' + life, metaX, metaY += 16);
+  ctx.fillText('point:' + point, metaX, metaY += 16);
+
+  if (isDebug) {
+    var fadeOutWeatherEntities = weatherEntities.filter(function(entity) {
+        return entity.isFadeOut();
+      }),
+      fadeOutMeteors = meteors.filter(function(entity) {
+        return entity.isFadeOut();
+      });
+
+    ctx.fillText('FPS:' + fps, metaX, metaY += 16);
+    ctx.fillText('nMeteors:' + meteors.length, metaX, metaY += 16);
+    ctx.fillText('nWeatherEntities:' + weatherEntities.length, metaX, metaY += 16);
+    ctx.fillText('nFadeOutMeteors:' + fadeOutMeteors.length, metaX, metaY += 16);
+    ctx.fillText('nFadeOutWeatherEntities:' + fadeOutWeatherEntities.length, metaX, metaY += 16);
+  }
+}
+
 /* ================================================================ Engine
 */
 
@@ -252,25 +278,7 @@ function render(dt) {
     meteors[i].render();
   }
 
+
   // meta
-  ctx.font = 'bold 16px Monospace';
-  ctx.fillStyle = '#fff';
-  ctx.textAlign = 'start';
-  ctx.fillText('life:' + life, metaX, metaY += 16);
-  ctx.fillText('point:' + point, metaX, metaY += 16);
-
-  if (isDebug) {
-    var fadeOutWeatherEntities = weatherEntities.filter(function(entity) {
-        return entity.isFadeOut();
-      }),
-      fadeOutMeteors = meteors.filter(function(entity) {
-        return entity.isFadeOut();
-      });
-
-    ctx.fillText('FPS:' + fps, metaX, metaY += 16);
-    ctx.fillText('nMeteors:' + meteors.length, metaX, metaY += 16);
-    ctx.fillText('nWeatherEntities:' + weatherEntities.length, metaX, metaY += 16);
-    ctx.fillText('nFadeOutMeteors:' + fadeOutMeteors.length, metaX, metaY += 16);
-    ctx.fillText('nFadeOutWeatherEntities:' + fadeOutWeatherEntities.length, metaX, metaY += 16);
-  }
+  renderMeta(fps);
 }
