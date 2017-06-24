@@ -45,6 +45,8 @@ Public transportation: clicker / idle game
 - [ ] move game engine to another repository
 - [ ] Docker support
 - [ ] code formatter by [Prettier](https://github.com/prettier/prettier)
+- [ ] fix eslint on `gulpfile.js`
+- [ ] add `test`, `htmlhint`, `stylelint` into `dev` npm script
 - [ ] font-icon
 ## Game
 - [ ] play as guest / or login via Google
@@ -61,7 +63,7 @@ Public transportation: clicker / idle game
 1. Install Node.js
 2. Install global dependencies: `npm install -g yarn firebase-tools bower lighthouse`
 3. Install dependencies: `yarn && bower install`
-4. Start dev: `firebase serve`
+4. Start dev: `firebase serve` and `yarn dev`
 
 ```
 Before commit please run command below to check
