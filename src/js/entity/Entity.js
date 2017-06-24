@@ -17,6 +17,7 @@ class Vector extends Position {
 
 }
 
+// @todo this should be interface
 class GameEntity {
 
   constructor(x, y) {
@@ -35,18 +36,21 @@ class GameEntity {
   }
 }
 
-// n stable
-// need to fade in
-class WeatherEntity extends GameEntity {
+// @todo this should be interface
+class StarEntity extends GameEntity {
 
   constructor(x, y) {
     super(x, y);
     this.opacity = 0;
+
+    // specific
     this.stateKey = {
       fadeIn: 1,
       fadeOut: 2,
-    }
-    this.state = this.stateKey.fadeIn;
+      dead: 3,
+      stable: 4,
+    };
+    this.state = this.stateKey.stable;
   }
 
   update(dt) {
@@ -62,67 +66,16 @@ class WeatherEntity extends GameEntity {
         this.opacity -= 0.01;
         if (this.opacity <= 0) {
           this.opacity = 0;
+          this.state = this.stateKey.dead;
         }
+        break;
+      case this.stateKey.dead:
+        break;
+      case this.stateKey.stable:
         break;
       default:
         break;
     }
-  }
-
-  fadeOut() {
-    this.state = this.stateKey.fadeOut;
-  }
-}
-
-// randomly occurred
-class XWeatherEntity extends GameEntity {
-
-}
-
-class Snow extends WeatherEntity {
-
-  constructor() {
-    var x = chance.integer({ min: 0, max: width }),
-      y = chance.integer({ min: -height / 2, max: 0 }),
-      vecX = chance.floating({ min: -0.5, max: 3.0 }),
-      vecY = chance.floating({ min: 1.0, max: 3.0 }),
-      radius = chance.floating({ min: 0.5, max: 3.0 });
-
-    super(x, y);
-    this.vel = new Vector(vecX, vecY);
-    this.radius = radius;
-  }
-
-  update(dt) {
-    super.update(dt);
-    this.pos.x += this.vel.x;
-    this.pos.y += this.vel.y;
-
-    // out of screen
-    if (this.pos.y > height) {
-      this.pos.y = 0;
-      this.pos.x = chance.integer({ min: 0, max: width });
-    }
-  }
-
-  render() {
-    super.render();
-    ctx.beginPath();
-    ctx.fillStyle = 'rgba(238, 238, 238, ' + this.opacity + ')';
-    ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI);
-    ctx.fill();
-    ctx.closePath();
-  }
-}
-
-class Star extends WeatherEntity {
-
-  constructor() {
-    var x = chance.integer({ min: 0, max: width }),
-      y = chance.integer({ min: 0, max: height });
-
-    super(x, y);
-    this.radius = 0;
   }
 
   setVelByRad(rad) {
@@ -137,6 +90,37 @@ class Star extends WeatherEntity {
 
     this.vel.x = Math.cos(rad) * mag;
     this.vel.y = Math.sin(rad) * mag;
+  }
+
+  fadeOut() {
+    this.state = this.stateKey.fadeOut;
+  }
+
+  isFadeIn() {
+    return this.state === this.stateKey.fadeIn;
+  }
+
+  isFadeOut() {
+    return this.state === this.stateKey.fadeOut;
+  }
+
+  isDead() {
+    return this.state === this.stateKey.dead;
+  }
+}
+
+class Star extends StarEntity {
+
+  constructor() {
+    var x = chance.integer({ min: 0, max: width }),
+      y = chance.integer({ min: 0, max: height });
+
+    super(x, y);
+    this.opacity = 0;
+    this.state = this.stateKey.fadeIn;
+
+    // specific
+    this.radius = 0;
   }
 
   update(dt) {
@@ -155,6 +139,67 @@ class Star extends WeatherEntity {
     ctx.beginPath();
     ctx.fillStyle = 'rgba(255, 221, 157, ' + this.opacity + ')';
     ctx.arc(this.pos.x, this.pos.y, this.radius, 0, Math.PI * 2, false);
+    ctx.fill();
+  }
+}
+
+class Meteor extends StarEntity {
+
+  constructor(x, y) {
+    super(x, y);
+    this.opacity = 1;
+    this.state = this.stateKey.stable;
+
+    // specific
+    this.tailLength = 5;
+    this.trailLengthDt = 0;
+  }
+
+  update(dt) {
+    super.update(dt);
+    this.pos.x += this.vel.x;
+    this.pos.y += this.vel.y;
+    this.trailLengthDt += 0.01;
+
+    if (this.state === this.stateKey.stable &&
+      this.pos.y > 2 * height) {
+      this.state = this.stateKey.fadeOut;
+    }
+  }
+
+  render() {
+    var x = this.pos.x,
+      y = this.pos.y,
+      currentTrailLength = 200 * this.trailLengthDt,
+      rad = Util.getRadian(this.vel),
+      tailPosX = x + currentTrailLength * Math.cos(rad),
+      tailPosY = y + currentTrailLength * Math.sin(rad),
+      tailPos = new Position(tailPosX, tailPosY);
+
+    // main
+    ctx.fillStyle = 'rgba(255, 255, 255, ' + this.opacity + ')';
+    ctx.beginPath();
+    ctx.moveTo(x - 1, y + 1);
+    ctx.lineTo(x, y + this.tailLength);
+    ctx.lineTo(x + 1, y + 1);
+    ctx.lineTo(x + this.tailLength, y);
+    ctx.lineTo(x + 1, y - 1);
+    ctx.lineTo(x, y + 1);
+    ctx.lineTo(x, y - this.tailLength);
+    ctx.lineTo(x - 1, y - 1);
+    ctx.lineTo(x - this.tailLength, y);
+    ctx.lineTo(x - 1, y + 1);
+    ctx.lineTo(x - this.tailLength, y);
+    ctx.closePath();
+    ctx.fill();
+
+    // trail
+    ctx.fillStyle = 'rgba(255, 221, 157, ' + this.opacity + ')';
+    ctx.beginPath();
+    ctx.moveTo(x - 1, y - 1);
+    ctx.lineTo(tailPos.x, tailPos.y);
+    ctx.lineTo(x + 1, y + 1);
+    ctx.closePath();
     ctx.fill();
   }
 }

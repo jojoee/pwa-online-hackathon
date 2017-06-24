@@ -1,4 +1,4 @@
-/* global Position, _, GameEntity, chance, Snow, Star, Util, firebase */
+/* global Position, _, GameEntity, chance, Meteor, Star, Util, firebase */
 /* eslint no-unused-vars: 0 */
 
 // Engine required
@@ -14,7 +14,7 @@ const isDebug = true,
     weather: 10000,
   };
 
-var entities = [],
+var meteors = [],
   weatherEntities = [],
   config = {
     currentWeather: 1,
@@ -155,9 +155,37 @@ function update(dt) {
     weatherEntities[i].update();
 
     // remove it, when it gone
-    if (weatherEntities[i].opacity <= 0) {
+    if (weatherEntities[i].isDead()) {
       weatherEntities.splice(i--, 1);
     }
+  }
+
+  // meteor
+  for (i = 0; i < meteors.length; i++) {
+    meteors[i].update();
+
+    // remove when it gone
+    if (meteors[i].isDead()) {
+      meteors.splice(i--, 1);
+    }
+  }
+
+  // randomly spam meteor
+  // @todo increase spam rate and spam range's width by with player point
+  if (chance.bool({ likelihood: 20 })) {
+    var x = chance.integer({ min: 0.8 * width, max: 1.2 * width }),
+      y = chance.integer({ min: -0.2 * height, max: 0 }),
+      // starPos = new Position(x, y),
+      // targetPos = new Position(0, height),
+      meteor = new Meteor(x, y),
+      mag = chance.integer({ min: 15, max: 30 }),
+      // newRad = Util.getRadian(targetPos, starPos),
+      rad = Util.getRadian(new Position(x, -(height + y)));
+
+    meteor.setVelByMag(mag);
+    // meteor.setVelByRad(newRad);
+    meteor.setVelByRad(rad);
+    meteors.push(meteor);
   }
 }
 
@@ -173,17 +201,28 @@ function render(dt) {
     weatherEntities[i].render();
   }
 
+  // meteor
+  for (i = 0; i < meteors.length; i++) {
+    meteors[i].render();
+  }
+
   // meta for debug
   if (isDebug) {
     var metaX = 10,
-      metaY = 10;
-    var fadeOutWeatherEntities = weatherEntities.filter(function(entity) {
-      return entity.opacity <= 0;
-    })
+      metaY = 120,
+      fadeOutWeatherEntities = weatherEntities.filter(function(entity) {
+        return entity.isFadeOut();
+      }),
+      fadeOutMeteors = meteors.filter(function(entity) {
+        return entity.isFadeOut();
+      });
+
     ctx.font = 'bold 16px Monospace';
     ctx.fillStyle = '#fff';
     ctx.fillText('FPS:' + fps, metaX, metaY += 16);
+    ctx.fillText('nMeteors:' + meteors.length, metaX, metaY += 16);
     ctx.fillText('nWeatherEntities:' + weatherEntities.length, metaX, metaY += 16);
+    ctx.fillText('nFadeOutMeteors:' + fadeOutMeteors.length, metaX, metaY += 16);
     ctx.fillText('nFadeOutWeatherEntities:' + fadeOutWeatherEntities.length, metaX, metaY += 16);
   }
 }
