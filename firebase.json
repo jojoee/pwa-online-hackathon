@@ -10,6 +10,7 @@
       "lighthouse/**",
       "coverage/**",
       "tool/**",
+      "bower_components/**",
       "**/node_modules/**",
       "**/**.lock",
       "**/**.log",
