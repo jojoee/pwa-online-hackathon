@@ -6,7 +6,7 @@
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
-PWA online hackathon
+Public transportation: clicker / idle game
 
 ## Checklist
 - [x] code on [GitHub](https://github.com/jojoee/pwa-online-hackathon)
@@ -24,19 +24,38 @@ PWA online hackathon
 - [ ] Lighthouse score more then 98
 
 ## Future update
-- [ ] Firebase storage
-- [ ] browser compatibility test
-- [ ] UI test
+- [ ] Firebase: storage
+- [ ] Firebase: update security rules
+- [ ] test: browser compatibility
+- [ ] test: UI
+- [ ] test: complete unit test
+- [ ] test: increase coverage threshold
 - [ ] localization
 - [ ] CI: another build by [AppVeyor](http://appveyor.com/)
 - [ ] CI: browser testing by [testling](https://ci.testling.com/)
 - [ ] CI: dependency checker by david-dm.org
 - [ ] CI: another dependency checker by [Greenkeeper](https://greenkeeper.io/)
+- [ ] design: improve mobile UX
+- [ ] automated script: concat all js files
+- [ ] automated script: resize app icon image
+- [ ] refactor: using `canvas` for all (not touch DOM ele)
+- [ ] refactor: using Class syntax for all
+- [ ] refactor: rewrite project with ES7 standard and compile to ES5 for frontend
+- [ ] refactor: remove unused
+- [ ] move game engine to another repository
 - [ ] Docker support
-- [ ] update Firebase security rules
 - [ ] code formatter by [Prettier](https://github.com/prettier/prettier)
-- [ ] complete unit test
-- [ ] increase coverage threshold
+- [ ] font-icon
+## Game
+- [ ] play as guest / or login via Google
+- [ ] welcome back report
+- [ ] using Geolocation API, if user move then got reward (% of user's gold)
+- [x] resize canvas when resize
+- [ ] update logo
+- [ ] bgm
+- [ ] tutorial
+- [ ] sfx
+- [ ] scores
 
 ## Getting started
 1. Install Node.js
@@ -66,6 +85,8 @@ $ firebase deploy # to deploy on Firebase hosting
 - [PWA Online Hackathon](https://pwa.online.hackathon.in.th/)
 - [Firebase](https://firebase.google.com/)
 - [Progressive Web Apps](https://developers.google.com/web/progressive-web-apps/)
+- [Google Codelabs](https://codelabs.developers.google.com)
+- [What is FCM token in Firebase?](https://stackoverflow.com/questions/37671380/what-is-fcm-token-in-firebase)
 
 ## Reference tool
 - [GoogleChrome/lighthouse](https://github.com/GoogleChrome/lighthouse)
