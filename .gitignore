@@ -16,9 +16,13 @@ firebase-debug.log
 coverage
 .nyc_output
 *.report.dom.html
+lighthouse
 
 # Lock
 yarn.lock
 
 # Note
 README-*.md
+
+# Dist
+dist
