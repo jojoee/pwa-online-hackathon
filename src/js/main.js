@@ -8,15 +8,18 @@ var c = document.createElement('canvas'),
   height,
   assetUrls = [];
 
-// Game
+// Game const
 const isDebug = true,
   delay = {
     weather: 10000,
   };
 
+// Game animation support
+var weatherEntities = [];
+
+// Game var
 var meteors = [],
-  weatherEntities = [],
-  isOver = false,
+  isGameOver = false,
   life,
   point,
   timestamp = {
@@ -99,7 +102,7 @@ function handleClick(e) {
     mousePos = new Position(cX, cY),
     i = 0;
 
-  if (isOver) {
+  if (isGameOver) {
     resetGame();
   }
 }
@@ -133,8 +136,7 @@ function updateCanvasSize() {
 
 function resetGame() {
   meteors = [];
-  weatherEntities = [];
-  isOver = false;
+  isGameOver = false;
   life = 1;
   point = 0;
   timestamp = {
@@ -142,10 +144,8 @@ function resetGame() {
   };
 }
 
-function gameOver() {
+function renderGameOverScreen() {
   var metaY = 100;
-
-  isOver = true;
 
   // render
   ctx.font = 'bold 16px Monospace';
@@ -202,8 +202,6 @@ function update(dt) {
     j = 0,
     utc = Util.getCurrentUtcTimestamp();
 
-  if (isOver) return;
-
   // change weather
   if (utc > timestamp.weather + delay.weather) {
     // change weather + update timestamp
@@ -235,23 +233,25 @@ function update(dt) {
       life--;
       if (life <= 0) {
         life = 0;
-        gameOver();
+        isGameOver = true;
       }
     }
   }
 
   // randomly spam meteor
   // @todo increase spam rate and spam range's width by with player point
-  if (chance.bool({ likelihood: 20 })) {
-    var x = chance.integer({ min: 0.8 * width, max: 1.2 * width }),
-      y = chance.integer({ min: -0.2 * height, max: 0 }),
-      meteor = new Meteor(x, y),
-      mag = chance.integer({ min: 15, max: 30 }),
-      rad = Util.getRadian(new Position(x, -(height + y)));
+  if (!isGameOver) {
+    if (chance.bool({ likelihood: 1 })) {
+      var x = chance.integer({ min: 0.8 * width, max: 1.2 * width }),
+        y = chance.integer({ min: -0.2 * height, max: 0 }),
+        meteor = new Meteor(x, y),
+        mag = chance.integer({ min: 15, max: 30 }),
+        rad = Util.getRadian(new Position(x, -(height + y)));
 
-    meteor.setVelByMag(mag);
-    meteor.setVelByRad(rad);
-    meteors.push(meteor);
+      meteor.setVelByMag(mag);
+      meteor.setVelByRad(rad);
+      meteors.push(meteor);
+    }
   }
 }
 
@@ -260,10 +260,6 @@ function render(dt) {
     metaX = 10,
     metaY = 120,
     i = 0;
-
-  if (isOver) {
-    return;
-  }
 
   // clear
   ctx.clearRect(0, 0, c.width, c.height);
@@ -278,6 +274,8 @@ function render(dt) {
     meteors[i].render();
   }
 
+  // game over
+  if (isGameOver) renderGameOverScreen();
 
   // meta
   renderMeta(fps);
