@@ -42,7 +42,6 @@ class Util {
    * @returns {number}
    */
   static getRadian(p1, p2 = new Position(0, 0)) {
-    // if (typeof p2 === 'undefined') p2 = new Position(0, 0);
     return Math.atan2(p2.y - p1.y, p2.x - p1.x);
   }
 
