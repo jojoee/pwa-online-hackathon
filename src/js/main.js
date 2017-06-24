@@ -111,6 +111,14 @@ function handleClick(e) {
     var entity = new Bomb(mousePos.x, mousePos.y, killRadius);
     effectEntities.push(entity);
 
+    for (i = 0; i < meteors.length; i++) {
+      var dist = Util.getDistance(meteors[i].pos, mousePos);
+
+      if (dist < killRadius) {
+        // @todo render bomb particles
+        meteors.splice(i--, 1);
+      }
+    }
   }
 }
 
