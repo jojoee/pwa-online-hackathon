@@ -9,7 +9,8 @@ var c = document.createElement('canvas'),
   assetUrls = [];
 
 // Game
-var entities = [];
+var entities = [],
+  weatherEntities = [];
 
 function handleInput(keyCode) {
 
@@ -43,7 +44,7 @@ function updateCanvasSize() {
 function boot() {
   updateCanvasSize();
   document.body.appendChild(c);
-  c.style.backgroundColor = '#1d1d1d';
+  c.style.backgroundColor = '#505050';
 }
 
 function create() {
@@ -56,7 +57,17 @@ function create() {
 }
 
 function update(dt) {
+  var i = 0,
+    j = 0;
 
+  for (i = 0; i < weatherEntities.length; i++) {
+    weatherEntities[i].update();
+  }
+
+  if (chance.bool({ likelihood: 50 })) {
+    var entity = new Snow();
+    weatherEntities.push(entity);
+  }
 }
 
 function render(dt) {
@@ -66,10 +77,16 @@ function render(dt) {
   // clear
   ctx.clearRect(0, 0, c.width, c.height);
 
-  // main
+  // weather entities
+  for (i = 0; i < weatherEntities.length; i++) {
+    weatherEntities[i].render();
+  }
 
   // meta
+  var metaX = 10,
+    metaY = 10;
   ctx.font = 'bold 16px Monospace';
   ctx.fillStyle = '#fff';
-  ctx.fillText('FPS:' + fps, 10, 26);
+  ctx.fillText('FPS:' + fps, metaX, metaY += 16);
+  ctx.fillText('nWeatherEntities:' + weatherEntities.length, metaX, metaY += 16);
 }
