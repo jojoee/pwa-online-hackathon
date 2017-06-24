@@ -111,9 +111,10 @@ window.addEventListener('resize', _.debounce(function() {
   updateCanvasSize();
 }, 200));
 
-/* ================================================================ Canvas
+/* ================================================================ Game util
 */
 
+// resize
 function updateCanvasSize() {
   var padding = 0;
 
