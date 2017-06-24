@@ -1,4 +1,4 @@
-/* global Position, _, GameEntity, chance, Snow */
+/* global Position, _, GameEntity, chance, Snow, Star, Util */
 /* eslint no-unused-vars: 0 */
 
 // Engine required
@@ -9,8 +9,94 @@ var c = document.createElement('canvas'),
   assetUrls = [];
 
 // Game
+const isDebug = true,
+  delay = {
+    weather: 10000,
+  };
+
 var entities = [],
-  weatherEntities = [];
+  weatherEntities = [],
+  config = {
+    currentWeather: 1,
+  },
+  weatherKey = {
+    snow: 1,
+    star: 2, // is star should be weather ?
+  },
+  timestamp = {
+    weather: Util.getCurrentUtcTimestamp() - delay.weather,
+  };
+
+/* ================================================================ Weather
+*/
+
+function addSnowWeather() {
+  var i = 0,
+    n = 160;
+
+  for (i = 0; i < n; i++) {
+    var entity = new Snow();
+    weatherEntities.push(entity);
+  }
+}
+
+function addStarWeather() {
+  var i = 0,
+    j = 0,
+    starLayers = [
+      {
+        starSpeed: 0.015,
+        starRadius: 0.4,
+        nStars: 320,
+      },
+      {
+        starSpeed: 0.03,
+        starRadius: 1,
+        nStars: 50,
+      },
+      {
+        starSpeed: 0.05,
+        starRadius: 1.5,
+        nStars: 30,
+      }
+    ];
+
+  // starts
+  for (j = 0; j < starLayers.length; j++) {
+    var layer = starLayers[j];
+
+    for (i = 0; i < layer.nStars; i++) {
+      var entity = new Star();
+
+      entity.radius = layer.starRadius;
+      entity.setVelByMag(layer.starSpeed);
+      entity.setVelByRad(2.5);
+      weatherEntities.push(entity);
+    }
+  }
+}
+
+function changeWeather() {
+  // @todo need to refactor
+  var i = 0,
+    weatherIndex = chance.integer({ min: 1, max: 2 });
+
+  console.log('changeWeather');
+
+  // fade out existing entities
+  for (i = 0; i < weatherEntities.length; i++) {
+    weatherEntities[i].fadeOut();
+  }
+
+  switch (weatherIndex) {
+    case weatherKey.snow:
+      addSnowWeather();
+      break;
+    case weatherKey.star:
+      addStarWeather();
+      break;
+  }
+}
 
 function handleInput(keyCode) {
 
@@ -58,15 +144,26 @@ function create() {
 
 function update(dt) {
   var i = 0,
-    j = 0;
+    j = 0,
+    utc = Util.getCurrentUtcTimestamp();
 
-  for (i = 0; i < weatherEntities.length; i++) {
-    weatherEntities[i].update();
+  // change weather
+  if (utc > timestamp.weather + delay.weather) {
+    // change weather
+    changeWeather();
+
+    // update ts
+    timestamp.weather = utc;
   }
 
-  if (chance.bool({ likelihood: 50 })) {
-    var entity = new Snow();
-    weatherEntities.push(entity);
+  // update weather
+  for (i = 0; i < weatherEntities.length; i++) {
+    weatherEntities[i].update();
+
+    // remove it, when it gone
+    if (weatherEntities[i].opacity <= 0) {
+      weatherEntities.splice(i--, 1);
+    }
   }
 }
 
@@ -82,11 +179,17 @@ function render(dt) {
     weatherEntities[i].render();
   }
 
-  // meta
-  var metaX = 10,
-    metaY = 10;
-  ctx.font = 'bold 16px Monospace';
-  ctx.fillStyle = '#fff';
-  ctx.fillText('FPS:' + fps, metaX, metaY += 16);
-  ctx.fillText('nWeatherEntities:' + weatherEntities.length, metaX, metaY += 16);
+  // meta for debug
+  if (isDebug) {
+    var metaX = 10,
+      metaY = 10;
+    var fadeOutWeatherEntities = weatherEntities.filter(function(entity) {
+      return entity.opacity <= 0;
+    })
+    ctx.font = 'bold 16px Monospace';
+    ctx.fillStyle = '#fff';
+    ctx.fillText('FPS:' + fps, metaX, metaY += 16);
+    ctx.fillText('nWeatherEntities:' + weatherEntities.length, metaX, metaY += 16);
+    ctx.fillText('nFadeOutWeatherEntities:' + fadeOutWeatherEntities.length, metaX, metaY += 16);
+  }
 }

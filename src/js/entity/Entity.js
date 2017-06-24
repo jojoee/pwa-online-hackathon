@@ -1,4 +1,4 @@
-/* global width, height, ctx, chance */
+/* global width, height, ctx, chance, Util */
 /* eslint no-unused-vars: 0 */
 
 class Position {
@@ -51,49 +51,126 @@ class GameEntity {
   }
 }
 
-class Snow extends GameEntity {
+// n stable
+// need to fade in
+class WeatherEntity extends GameEntity {
+
+  constructor(x, y) {
+    super(x, y);
+    this.opacity = 0;
+    this.stateKey = {
+      fadeIn: 1,
+      fadeOut: 2,
+    }
+    this.state = this.stateKey.fadeIn;
+  }
+
+  update(dt) {
+    // state
+    switch (this.state) {
+      case this.stateKey.fadeIn:
+        this.opacity += 0.005;
+        if (this.opacity >= 1) {
+          this.opacity = 1;
+        }
+        break;
+      case this.stateKey.fadeOut:
+        this.opacity -= 0.01;
+        if (this.opacity <= 0) {
+          this.opacity = 0;
+        }
+        break;
+      default:
+        break;
+    }
+  }
+
+  fadeOut() {
+    this.state = this.stateKey.fadeOut;
+  }
+}
+
+// randomly occurred
+class XWeatherEntity extends GameEntity {
+
+}
+
+class Snow extends WeatherEntity {
 
   constructor() {
-    var colors = [
-        '#eee',
-        '#fcfcfc',
-        '#f2f2f2',
-        '#fff',
-      ],
-      x = chance.integer({ min: 0, max: width }),
-      y = chance.integer({ min: -height, max: 0 }),
+    var x = chance.integer({ min: 0, max: width }),
+      y = chance.integer({ min: -height / 2, max: 0 }),
       vecX = chance.floating({ min: -0.5, max: 3.0 }),
       vecY = chance.floating({ min: 1.0, max: 3.0 }),
-      radius = chance.floating({ min: 0.5, max: 3.0 }),
-      color = colors[chance.integer({ min: 0, max: colors.length - 1 })];
+      radius = chance.floating({ min: 0.5, max: 3.0 });
 
-    // base
     super(x, y);
-
-    // specific
     this.vel = new Vector(vecX, vecY);
     this.radius = radius;
-    this.color = color;
   }
 
   update(dt) {
     super.update(dt);
-
     this.pos.x += this.vel.x;
     this.pos.y += this.vel.y;
 
+    // out of screen
     if (this.pos.y > height) {
-      this.opacity -= 0.1;
+      this.pos.y = 0;
+      this.pos.x = chance.integer({ min: 0, max: width });
     }
   }
 
   render() {
     super.render();
-
     ctx.beginPath();
-    ctx.fillStyle = this.color;
+    ctx.fillStyle = 'rgba(238, 238, 238, ' + this.opacity + ')';
     ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI);
     ctx.fill();
     ctx.closePath();
+  }
+}
+
+class Star extends WeatherEntity {
+
+  constructor() {
+    var x = chance.integer({ min: 0, max: width }),
+      y = chance.integer({ min: 0, max: height });
+
+    super(x, y);
+    this.radius = 0;
+  }
+
+  setVelByRad(rad) {
+    var mag = Util.getMagnitude(this.vel);
+
+    this.vel.x = Math.cos(rad) * mag;
+    this.vel.y = Math.sin(rad) * mag;
+  }
+
+  setVelByMag(mag) {
+    var rad = Util.getRadian(this.vel);
+
+    this.vel.x = Math.cos(rad) * mag;
+    this.vel.y = Math.sin(rad) * mag;
+  }
+
+  update(dt) {
+    super.update(dt);
+    this.pos.x += this.vel.x;
+    this.pos.y += this.vel.y;
+
+    if (this.pos.x > width) this.pos.x = 0;
+    if (this.pos.x < 0) this.pos.x = width;
+    if (this.pos.y > height) this.pos.y = 0;
+    if (this.pos.y < 0) this.pos.y = height;
+  }
+
+  render() {
+    super.render();
+    ctx.beginPath();
+    ctx.fillStyle = 'rgba(255, 221, 157, ' + this.opacity + ')';
+    ctx.arc(this.pos.x, this.pos.y, this.radius, 0, Math.PI * 2, false);
+    ctx.fill();
   }
 }
