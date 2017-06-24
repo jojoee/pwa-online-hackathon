@@ -1,11 +1,11 @@
 {
-  "name": "Public transportation: clicker / idle ",
-  "short_name": "Public trans",
+  "name": "MeteorKiller: star lord",
+  "short_name": "MeteorKiller",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#505050",
   "orientation": "landscape",
-  "description": "Public transportation: clicker / idle",
+  "description": "MeteorKiller: star lord",
   "icons": [{
     "src": "src/image/touch/homescreen48.png",
     "sizes": "48x48",
