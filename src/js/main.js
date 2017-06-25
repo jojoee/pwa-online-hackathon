@@ -50,7 +50,7 @@ var firebaseScoreRef,
 
 function firebaseCheck() {
   if (!window.firebase || !(firebase.app instanceof Function) || !firebase.app().options) {
-    console.log('please import Firebase SDK, and config it')
+    gameLog('please import Firebase SDK, and config it')
   }
 }
 
@@ -81,7 +81,7 @@ function firebaseSaveFcmToken() {
   firebaseMessaging.getToken()
     .then(function(currentToken) {
       if (currentToken) {
-        console.log('fcmToken', currentToken);
+        gameLog('fcmToken', currentToken);
         firebaseFcmTokenRef
           .child(currentToken)
           .set(firebase.auth().currentUser.uid);
@@ -92,13 +92,13 @@ function firebaseSaveFcmToken() {
       }
     })
     .catch(function(error) {
-      console.error('unable to get FCM token.', error);
+      gameError('unable to get FCM token.', error);
     });
 };
 
 // request permissions to show notifications
 function firebaseRequestNotificationsPermissions() {
-  console.log('requesting notifications permission...');
+  gameLog('requesting notifications permission...');
 
   // popup notification on browser
   firebaseMessaging.requestPermission()
@@ -106,7 +106,7 @@ function firebaseRequestNotificationsPermissions() {
       firebaseSaveFcmToken();
     })
     .catch(function(error) {
-      console.error('unable to get permission to notify', error);
+      gameError('unable to get permission to notify', error);
     });
 };
 
@@ -127,10 +127,10 @@ function firebaseSaveHighScore() {
       ts: Util.getCurrentUtcTimestamp(),
     }).then(function() {
       // @todo notify user
-      console.log('highScore has been saved', userData.highScore);
+      gameLog('highScore has been saved', userData.highScore);
     })
     .catch(function(error) {
-      console.error('unable push score to database', error);
+      gameError('unable push score to database', error);
     });
   }
 };
@@ -139,13 +139,13 @@ function firebaseSaveHighScore() {
 */
 
 function firebaseOnMessage(payload) {
-  console.log(payload);
+  gameLog(payload);
 }
 
 // triggers auth state change
 // e.g. user signs-in or signs-out
 function firebaseOnAuthStateChanged(user) {
-  console.log('user', user);
+  gameLog('user', user);
 
   if (user) {
     // update UI
@@ -165,16 +165,16 @@ function firebaseOnAuthStateChanged(user) {
         var val = snapshot.val();
 
         if (val) {
-          console.log('get user score', val);
+          gameLog('get user score', val);
           userData.highScore = (userData.highScore > val.highScore)
             ? userData.highScore
             : val.highScore;
         } else {
-          console.log('get user score: no data');
+          gameLog('get user score: no data');
         }
       })
       .catch(function(error) {
-        console.error('unable get score to database', error);
+        gameError('unable get score to database', error);
       });
 
     // save FCM
@@ -311,6 +311,9 @@ function resetGame() {
   };
 }
 
+/* ================================================================ Game misc
+*/
+
 // resize
 function updateCanvasSize() {
   var padding = 0;
@@ -323,6 +326,16 @@ function updateCanvasSize() {
   // change weather + update timestamp
   changeWeather();
   timestamp.weather = Util.getCurrentUtcTimestamp();
+}
+
+function gameLog(a, b = null) {
+  if (!isDebug) return;
+  console.log(a, b);
+}
+
+function gameError(a, b = null) {
+  if (!isDebug) return;
+  console.error(a, b);
 }
 
 /* ================================================================ Game render
