@@ -40,8 +40,10 @@ var eleSignInButton = document.getElementById('sign-in'),
 
 // firebase
 var firebaseScoreRef,
+  firebaseFcmTokenRef,
   firebaseAuth,
-  firebaseDatabase;
+  firebaseDatabase,
+  firebaseMessaging;
 
 /* ================================================================ Firebase
 */
@@ -55,7 +57,12 @@ function firebaseCheck() {
 function firebaseInit() {
   firebaseAuth = firebase.auth();
   firebaseDatabase = firebase.database();
+  firebaseScoreRef = firebase.database().ref('/scores');
+  firebaseFcmTokenRef = firebase.database().ref('/fcmTokens');
+  firebaseMessaging = firebase.messaging();
+
   firebaseAuth.onAuthStateChanged(firebaseOnAuthStateChanged);
+  firebaseMessaging.onMessage(firebaseOnMessage)
 }
 
 function firebaseSignIn() {
@@ -67,8 +74,48 @@ function firebaseSignOut() {
   firebaseAuth.signOut();
 }
 
+// save FCM token into db
+// (Firebase Messaging Device)
+function firebaseSaveFcmToken() {
+  // get FCM token
+  firebaseMessaging.getToken()
+    .then(function(currentToken) {
+      if (currentToken) {
+        console.log('fcmToken', currentToken);
+        firebaseFcmTokenRef
+          .child(currentToken)
+          .set(firebase.auth().currentUser.uid);
+
+      } else {
+        // request notification permission
+        firebaseRequestNotificationsPermissions();
+      }
+    })
+    .catch(function(error) {
+      console.error('unable to get FCM token.', error);
+    });
+};
+
+// request permissions to show notifications
+function firebaseRequestNotificationsPermissions() {
+  console.log('requesting notifications permission...');
+
+  // popup notification on browser
+  firebaseMessaging.requestPermission()
+    .then(function() {
+      firebaseSaveFcmToken();
+    })
+    .catch(function(error) {
+      console.error('unable to get permission to notify', error);
+    });
+};
+
 /* ================================================================ Firebase listener
 */
+
+function firebaseOnMessage(payload) {
+  console.log(payload);
+}
 
 // triggers auth state change
 // e.g. user signs-in or signs-out
