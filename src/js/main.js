@@ -452,11 +452,12 @@ function update(dt) {
       meteors[i].isCounted = true;
       // reduce life
       life--;
+      isScreenshake = true;
+      timestamp.screenshake = utc;
+
       if (life <= 0) {
         life = 0;
         isGameOver = true;
-        isScreenshake = true;
-        timestamp.screenshake = utc;
 
         if (score > userData.highScore) {
           userData.highScore = score;
