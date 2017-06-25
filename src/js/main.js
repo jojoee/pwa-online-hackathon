@@ -15,6 +15,7 @@ const isDebug = true,
   },
   delay = {
     weather: 10000,
+    screenshake: 100,
   };
 
 // Game animation support
@@ -24,6 +25,7 @@ var weatherEntities = [],
 // Game var
 var meteors = [],
   isGameOver = false,
+  isScreenshake = false,
   life,
   score,
   userData = {
@@ -31,6 +33,7 @@ var meteors = [],
   },
   timestamp = {
     weather: 0,
+    screenshake: 0,
   };
 
 var eleSignInButton = document.getElementById('sign-in'),
@@ -356,6 +359,15 @@ function renderMeta(fps) {
   var metaX = 10,
     metaY = 50;
 
+  // partial screenshake technique
+  if (isScreenshake) {
+    var dx = chance.integer({ min: -5, max: 5 }),
+      dy = chance.integer({ min: -5, max: 5 });
+
+    metaX += dx;
+    metaY += dy;
+  }
+
   ctx.font = 'bold 16px Monospace';
   ctx.fillStyle = '#fff';
   ctx.textAlign = 'start';
@@ -405,6 +417,12 @@ function update(dt) {
     j = 0,
     utc = Util.getCurrentUtcTimestamp();
 
+  // reset game status
+  // - screenshake
+  if (utc > timestamp.screenshake + delay.screenshake) {
+    isScreenshake = false;
+  }
+
   // change weather
   if (utc > timestamp.weather + delay.weather) {
     // change weather + update timestamp
@@ -437,6 +455,8 @@ function update(dt) {
       if (life <= 0) {
         life = 0;
         isGameOver = true;
+        isScreenshake = true;
+        timestamp.screenshake = utc;
 
         if (score > userData.highScore) {
           userData.highScore = score;
