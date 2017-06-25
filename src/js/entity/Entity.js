@@ -321,3 +321,17 @@ class StarLordMessage extends GameMessage {
     super.updatePosition(x, y);
   }
 }
+
+class GalaxyMessage extends GameMessage {
+
+  constructor() {
+    super('Galaxy');
+    this.updatePosition();
+  }
+
+  updatePosition() {
+    var x = 10,
+      y = height - 26;
+    super.updatePosition(x, y);
+  }
+}

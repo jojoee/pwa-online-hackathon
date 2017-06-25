@@ -159,7 +159,9 @@ function firebaseSaveHighScore() {
 */
 
 function firebaseOnMessage(payload) {
-  gameLog(payload);
+  gameLog('payload', payload);
+  var message = payload.notification.title
+  galaxyMessage.echo(message);
 }
 
 // triggers auth state change
