@@ -57,8 +57,8 @@ function firebaseCheck() {
 function firebaseInit() {
   firebaseAuth = firebase.auth();
   firebaseDatabase = firebase.database();
-  firebaseScoreRef = firebase.database().ref('/scores');
-  firebaseFcmTokenRef = firebase.database().ref('/fcmTokens');
+  firebaseScoreRef = firebaseDatabase.ref('/scores');
+  firebaseFcmTokenRef = firebaseDatabase.ref('/fcmTokens');
   firebaseMessaging = firebase.messaging();
 
   firebaseAuth.onAuthStateChanged(firebaseOnAuthStateChanged);
@@ -280,13 +280,6 @@ function onSignOutButtonClicked(e) {
   firebaseSignOut();
 }
 
-// https://davidwalsh.name/javascript-debounce-function
-// https://css-tricks.com/debouncing-throttling-explained-examples/
-// https://stackoverflow.com/questions/1248081/get-the-browser-viewport-dimensions-with-javascript
-window.addEventListener('resize', _.debounce(function() {
-  updateCanvasSize();
-}, 200));
-
 function initListener() {
   // canvas
   c.addEventListener('click', onCanvasClicked);
@@ -294,6 +287,13 @@ function initListener() {
   // sign-in, sign-out
   eleSignInButton.addEventListener('click', onSignInButtonClicked);
   eleSignOutButton.addEventListener('click', onSignOutButtonClicked);
+
+  // https://davidwalsh.name/javascript-debounce-function
+  // https://css-tricks.com/debouncing-throttling-explained-examples/
+  // https://stackoverflow.com/questions/1248081/get-the-browser-viewport-dimensions-with-javascript
+  window.addEventListener('resize', _.debounce(function() {
+    updateCanvasSize();
+  }, 200));
 }
 
 /* ================================================================ Game
@@ -422,13 +422,13 @@ function update(dt) {
       if (life <= 0) {
         life = 0;
         isGameOver = true;
-        userData.highScore = (score > userData.highScore)
-          ? score
-          : userData.highScore;
 
-        // save into firebase db
-        if (firebaseIsUserSignedIn()) {
-          firebaseSaveHighScore();
+        if (score > userData.highScore) {
+          userData.highScore = score;
+
+          if (firebaseIsUserSignedIn()) {
+            firebaseSaveHighScore();
+          }
         }
       }
     }
