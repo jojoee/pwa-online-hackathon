@@ -1,4 +1,4 @@
-/* global Position, _, GameEntity, chance, Meteor, StarWeather, BombEffect, PointEffect, Util, firebase, StarLordMessage, GalaxyMessage */
+/* global Position, _, GameEntity, chance, Meteor, StarWeather, BombEffect, PointEffect, Util, firebase, StarLordMessage, GalaxyMessage, Howl */
 /* eslint no-unused-vars: 0 */
 
 // Engine required
@@ -32,6 +32,12 @@ const isDebug = false,
 // Game animation support
 var weatherEntities = [],
   effectEntities = [];
+
+// Game effect sound
+var attackedEffectSound = new Howl({
+  src: ['/dist/sound/attacked.wav'],
+  volume: 0.5,
+});
 
 // Game behavior support
 var starLordMessage = new StarLordMessage(),
@@ -482,6 +488,7 @@ function update(dt) {
       meteors[i].isCounted = true;
       // reduce life
       life--;
+      attackedEffectSound.play();
       isScreenshake = true;
       timestamp.screenshake = utc;
 

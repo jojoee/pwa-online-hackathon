@@ -13,11 +13,15 @@ var styleFiles = [
     './bower_components/lodash/dist/lodash.min.js',
     './bower_components/chance/dist/chance.min.js',
     './bower_components/randomcolor/randomColor.js',
+    './bower_components/howler.js/dist/howler.min.js',
     './src/js/entity/Entity.js',
     './src/js/static/Resource.js',
     './src/js/static/Util.js',
     './src/js/main.js',
     './src/js/engine/Engine.js',
+  ],
+  soundFiles = [
+    './src/sound/**/*.wav',
   ],
   imageFiles = [
     './src/image/**/*.png',
@@ -56,11 +60,17 @@ gulp.task('image', function () {
     .pipe(gulp.dest('dist/image'));
 });
 
+gulp.task('sound', function () {
+  return gulp.src(soundFiles)
+    .pipe(gulp.dest('dist/sound'));
+});
+
 gulp.task('watch', function () {
   gulp.watch('./src/css/**/*.css', ['style']);
   gulp.watch('./src/js/**/*.js', ['script']);
-  gulp.watch('./src/image/**/*.png', ['image']);
+  gulp.watch(imageFiles, ['image']);
+  gulp.watch(soundFiles, ['sound']);
 });
 
-gulp.task('build', ['style', 'script', 'image']);
+gulp.task('build', ['style', 'script', 'image', 'sound']);
 gulp.task('default', ['build', 'watch']);

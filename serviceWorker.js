@@ -7,6 +7,7 @@ var filesToCache = [
   '/index.html',
   '/dist/css/main.min.css',
   '/dist/js/main.min.js',
+  '/dist/sound/attacked.wav',
 ];
 
 // cache / load asset (app shell)
