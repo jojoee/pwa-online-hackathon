@@ -325,6 +325,7 @@ function onSignInButtonClicked(e) {
 function onSignOutButtonClicked(e) {
   e.preventDefault();
   firebaseSignOut();
+  userData.highScore = 0;
 }
 
 function initListener() {
