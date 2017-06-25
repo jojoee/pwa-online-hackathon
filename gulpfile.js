@@ -10,7 +10,6 @@ var styleFiles = [
     './src/css/main.css',
   ],
   scriptFiles = [
-    './bower_components/firebase/firebase.js',
     './bower_components/lodash/dist/lodash.min.js',
     './bower_components/chance/dist/chance.min.js',
     './bower_components/randomcolor/randomColor.js',

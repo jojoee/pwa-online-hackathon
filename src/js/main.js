@@ -39,15 +39,7 @@ var eleSignInButton = document.getElementById('sign-in'),
   eleUserDisplayName = document.getElementById('user-display-name');
 
 // firebase
-var firebaseConfig = {
-    apiKey: 'AIzaSyDN74C2v5IE6lPzAzGQ1aGQ6MQNujvKwKA',
-    authDomain: 'pwa-online-hackathon-ae5f6.firebaseapp.com',
-    databaseURL: 'https://pwa-online-hackathon-ae5f6.firebaseio.com',
-    projectId: 'pwa-online-hackathon-ae5f6',
-    storageBucket: 'pwa-online-hackathon-ae5f6.appspot.com',
-    messagingSenderId: '390428073562',
-  },
-  firebaseScoreRef,
+var firebaseScoreRef,
   firebaseAuth,
   firebaseDatabase;
 
@@ -290,7 +282,6 @@ function boot() {
   initListener();
 
   // firebase
-  firebase.initializeApp(firebaseConfig);
   firebaseCheck();
   firebaseInit();
 }
