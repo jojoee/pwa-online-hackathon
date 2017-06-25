@@ -1,12 +1,12 @@
 {
-  "name": "MeteorKiller: star lord",
+  "name": "MeteorKiller: Kill all Star lord's meteor",
   "short_name": "MeteorKiller",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#505050",
   "theme_color": "#eeff23",
   "orientation": "landscape",
-  "description": "MeteorKiller: star lord",
+  "description": "MeteorKiller: Kill all Star lord's meteor",
   "icons": [{
     "src": "dist/image/touch/homescreen48.png",
     "sizes": "48x48",

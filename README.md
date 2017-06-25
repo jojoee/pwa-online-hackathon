@@ -5,6 +5,8 @@
 [![License](https://img.shields.io/github/license/mashape/apistatus.svg)](http://opensource.org/licenses/MIT)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
+Kill all Star lord's meteor
+
 ## Checklist
 - [x] code on [GitHub](https://github.com/jojoee/pwa-online-hackathon)
 - [x] host on [Firebase hosting](https://pwa-online-hackathon-ae5f6.firebaseapp.com/)
