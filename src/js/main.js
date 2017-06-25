@@ -311,9 +311,15 @@ function render(dt) {
     effectEntities[i].render();
   }
 
-  // game over
-  if (isGameOver) renderGameOverScreen();
-
   // meta
   renderMeta(fps);
+
+  // game over
+  if (isGameOver) {
+    // render overlay screen
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+    ctx.fillRect(0, 0, width, height);
+
+    renderGameOverScreen();
+  }
 }

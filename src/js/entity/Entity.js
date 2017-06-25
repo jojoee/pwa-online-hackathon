@@ -234,6 +234,7 @@ class Bomb extends GameEntityInterface {
 
   update(dt) {
     super.update(dt);
+    this.radius -= 1;
   }
 
   render() {
