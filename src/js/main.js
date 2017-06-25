@@ -389,9 +389,9 @@ function renderGameOverScreen() {
   ctx.font = 'bold 16px Monospace';
   ctx.fillStyle = '#fff';
   ctx.textAlign = 'center';
-  ctx.fillText('Press any key to', metaX, metaY += 16);
-  ctx.fillText('continue, score: ' + score, width / 2, metaY += 16);
+  ctx.fillText('Tab to continue', metaX, metaY += 16);
   ctx.fillText('high score: ' + userData.highScore, metaX, metaY += 16);
+  ctx.fillText('score: ' + score, width / 2, metaY += 16);
 }
 
 function renderMeta(fps) {
