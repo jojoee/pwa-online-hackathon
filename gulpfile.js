@@ -12,8 +12,7 @@ var styleFiles = [
   scriptFiles = [
     './bower_components/lodash/dist/lodash.min.js',
     './bower_components/chance/dist/chance.min.js',
-    './bower_components/randomcolor/randomColor.js',
-    './bower_components/howler.js/dist/howler.min.js',
+    './bower_components/howler.js/dist/howler.core.min.js',
     './bower_components/firebase/firebase-app.js',
     './bower_components/firebase/firebase-auth.js',
     './bower_components/firebase/firebase-database.js',
