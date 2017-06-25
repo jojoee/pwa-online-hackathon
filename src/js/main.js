@@ -154,7 +154,7 @@ function changeWeather() {
   addStarWeather();
 }
 
-/* ================================================================ Event
+/* ================================================================ Listener
 */
 
 function handleClick(e) {
@@ -200,7 +200,6 @@ window.addEventListener('resize', _.debounce(function() {
   updateCanvasSize();
 }, 200));
 
-/* ================================================================ Game util
 function initListener() {
 
   // sign-in, sign-out
@@ -208,7 +207,18 @@ function initListener() {
   eleSignOutButton.addEventListener('click', onSignOutButtonClicked);
 }
 
+/* ================================================================ Game
 */
+
+function resetGame() {
+  meteors = [];
+  isGameOver = false;
+  life = 1;
+  score = 0;
+  timestamp = {
+    weather: Util.getCurrentUtcTimestamp() - delay.weather,
+  };
+}
 
 // resize
 function updateCanvasSize() {
@@ -224,18 +234,8 @@ function updateCanvasSize() {
   timestamp.weather = Util.getCurrentUtcTimestamp();
 }
 
-/* ================================================================ Game
+/* ================================================================ Game render
 */
-
-function resetGame() {
-  meteors = [];
-  isGameOver = false;
-  life = 1;
-  score = 0;
-  timestamp = {
-    weather: Util.getCurrentUtcTimestamp() - delay.weather,
-  };
-}
 
 function renderGameOverScreen() {
   var metaY = 100;
