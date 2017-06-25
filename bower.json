@@ -19,6 +19,7 @@
     "lodash": "^4.17.4",
     "chance": "^1.0.10",
     "randomcolor": "randomColor#^0.5.2",
-    "howler.js": "howler#^2.0.4"
+    "howler.js": "howler#^2.0.4",
+    "firebase": "^4.1.3"
   }
 }

@@ -8,6 +8,15 @@ var c = document.createElement('canvas'),
   height,
   assetUrls = [];
 
+const firebaseConfig = {
+  'apiKey': 'AIzaSyDN74C2v5IE6lPzAzGQ1aGQ6MQNujvKwKA',
+  'databaseURL': 'https://pwa-online-hackathon-ae5f6.firebaseio.com',
+  'storageBucket': 'pwa-online-hackathon-ae5f6.appspot.com',
+  'authDomain': 'pwa-online-hackathon-ae5f6.firebaseapp.com',
+  'messagingSenderId': '390428073562',
+  'projectId': 'pwa-online-hackathon-ae5f6',
+};
+
 // Game const
 const isDebug = false,
   appDefault = {
@@ -426,6 +435,7 @@ function renderMeta(fps) {
 */
 
 function boot() {
+  firebase.initializeApp(firebaseConfig);
   updateCanvasSize();
   document.body.appendChild(c);
   c.style.backgroundColor = '#505050';
