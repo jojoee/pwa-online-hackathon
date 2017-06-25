@@ -176,14 +176,14 @@ function renderGameOverScreen() {
 
 function renderMeta(fps) {
   var metaX = 10,
-    metaY = 120;
+    metaY = 50;
 
   ctx.font = 'bold 16px Monospace';
   ctx.fillStyle = '#fff';
   ctx.textAlign = 'start';
-  ctx.fillText('life:' + life, metaX, metaY += 16);
-  ctx.fillText('score:' + score, metaX, metaY += 16);
-  ctx.fillText('high score:' + userData.highScore, metaX, metaY += 16);
+  ctx.fillText('life: ' + life, metaX, metaY += 16);
+  ctx.fillText('score: ' + score, metaX, metaY += 16);
+  ctx.fillText('high score: ' + userData.highScore, metaX, metaY += 16);
 
   if (isDebug) {
     var fadeOutWeatherEntities = weatherEntities.filter(function(entity) {
@@ -193,12 +193,12 @@ function renderMeta(fps) {
         return entity.isFadeOut();
       });
 
-    ctx.fillText('FPS:' + fps, metaX, metaY += 16);
-    ctx.fillText('nMeteors:' + meteors.length, metaX, metaY += 16);
-    ctx.fillText('nWeatherEntities:' + weatherEntities.length, metaX, metaY += 16);
-    ctx.fillText('nEffectEntities:' + effectEntities.length, metaX, metaY += 16);
-    ctx.fillText('nFadeOutMeteors:' + fadeOutMeteors.length, metaX, metaY += 16);
-    ctx.fillText('nFadeOutWeatherEntities:' + fadeOutWeatherEntities.length, metaX, metaY += 16);
+    ctx.fillText('FPS: ' + fps, metaX, metaY += 16);
+    ctx.fillText('nMeteors: ' + meteors.length, metaX, metaY += 16);
+    ctx.fillText('nWeatherEntities: ' + weatherEntities.length, metaX, metaY += 16);
+    ctx.fillText('nEffectEntities: ' + effectEntities.length, metaX, metaY += 16);
+    ctx.fillText('nFadeOutMeteors: ' + fadeOutMeteors.length, metaX, metaY += 16);
+    ctx.fillText('nFadeOutWeatherEntities: ' + fadeOutWeatherEntities.length, metaX, metaY += 16);
   }
 }
 
