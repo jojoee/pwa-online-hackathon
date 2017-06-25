@@ -266,16 +266,17 @@ class PointEffect extends GameEntityInterface {
 /* ================================================================ Message
 */
 
+// immortal entity
 class GameMessage extends GameEntityInterface {
 
   constructor(name) {
     super(0, 0);
-    this.opacity = 1;
-    this.state = this.stateKey.stable;
+    this.opacity = 0;
+    this.state = this.stateKey.dead;
 
     // specific
     this.name = name;
-    this.text = '';
+    this.message = '';
   }
 
   updatePosition(x, y) {
@@ -283,16 +284,27 @@ class GameMessage extends GameEntityInterface {
     this.pos.y = y;
   }
 
+  echo(message) {
+    this.opacity = 0;
+    this.state = this.stateKey.fadeIn;
+    this.message = message;
+  }
+
   update(dt) {
     super.update(dt);
+    if (this.opacity >= 1) {
+      this.state = this.stateKey.fadeOut;
+    }
   }
 
   render() {
+    if (this.isDead()) return;
+
     super.render();
     ctx.font = 'bold 16px Monospace';
     ctx.fillStyle = 'rgba(180, 180, 180, ' + this.opacity + ')';
     ctx.textAlign = 'left';
-    ctx.fillText(this.name + ' says: ' + this.text, this.pos.x, this.pos.y);
+    ctx.fillText(this.name + ' says: ' + this.message, this.pos.x, this.pos.y);
   }
 }
 

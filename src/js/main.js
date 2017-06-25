@@ -13,9 +13,20 @@ const isDebug = false,
   appDefault = {
     userAvatarUrl: '/dist/image/user-avatar.png',
   },
+  starLordMessages = [
+    'Wha ha ha ha',
+    'Common!',
+    'Go! Go! Go!',
+    'Out of mana',
+    'GODLIKE',
+    'GG',
+    'Me mid ty',
+    'This game is hard~'
+  ],
   delay = {
     weather: 10000,
     screenshake: 50,
+    starLordMessage: 15000,
   };
 
 // Game animation support
@@ -39,6 +50,7 @@ var meteors = [],
   timestamp = {
     weather: 0,
     screenshake: 0,
+    starLordMessage: 0,
   };
 
 var eleSignInButton = document.getElementById('sign-in'),
@@ -438,6 +450,15 @@ function update(dt) {
   }
 
   // update weather
+  // message
+  if (utc > timestamp.starLordMessage + delay.starLordMessage) {
+    var msgIndex = chance.integer({ min: 0, max: starLordMessages.length - 1 }),
+      msg = starLordMessages[msgIndex];
+
+    starLordMessage.echo(msg);
+    timestamp.starLordMessage = utc;
+  }
+
   for (i = 0; i < weatherEntities.length; i++) {
     weatherEntities[i].update();
 
