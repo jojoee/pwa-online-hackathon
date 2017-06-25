@@ -15,18 +15,25 @@ body {
   width: 100%;
   border-bottom: 2px solid #444;
   color: #fff;
+  padding: 3px 16px;
+  transform: translateZ(0);
+  will-change: transform;
 }
 
-#user-pic {
-  top: 2px;
-  width: 33px;
-  height: 33px;
-  background-size: 33px;
-  border-radius: 20px;
+#user-avatar {
+  height: 34px;
+  width: 34px;
+  border-radius: 23px;
+  border: 1px solid;
+  top: 0;
+  margin-right: 6px;
   float: left;
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
-#user-name {
+#user-display-name {
   font-size: 16px;
   line-height: 42px;
   float: left;
@@ -36,13 +43,24 @@ body {
   color: #fff;
   float: right;
   border: none;
+  border-radius: 4px;
   background: 0;
+  outline: none;
   font-size: 14px;
   font-weight: 500;
   text-transform: uppercase;
-  overflow: hidden;
-  line-height: 42px;
-  outline: none;
+  line-height: 34px;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -ms-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+
+.sign-btn:active,
+.sign-btn:hover,
+.sign-btn:focus {
+  background: #272727;
 }
 
 canvas {

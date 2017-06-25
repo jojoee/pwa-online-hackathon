@@ -10,6 +10,9 @@ var c = document.createElement('canvas'),
 
 // Game const
 const isDebug = true,
+  appDefault = {
+    userAvatarUrl: '/dist/image/user-avatar.png',
+  },
   delay = {
     weather: 10000,
   };
@@ -30,20 +33,74 @@ var meteors = [],
     weather: 0,
   };
 
+var eleSignInButton = document.getElementById('sign-in'),
+  eleSignOutButton = document.getElementById('sign-out'),
+  eleUserAvatar = document.getElementById('user-avatar'),
+  eleUserDisplayName = document.getElementById('user-display-name');
+
 // firebase
 var firebaseConfig = {
-  apiKey: 'AIzaSyDN74C2v5IE6lPzAzGQ1aGQ6MQNujvKwKA',
-  authDomain: 'pwa-online-hackathon-ae5f6.firebaseapp.com',
-  databaseURL: 'https://pwa-online-hackathon-ae5f6.firebaseio.com',
-  projectId: 'pwa-online-hackathon-ae5f6',
-  storageBucket: 'pwa-online-hackathon-ae5f6.appspot.com',
-  messagingSenderId: '390428073562',
-};
+    apiKey: 'AIzaSyDN74C2v5IE6lPzAzGQ1aGQ6MQNujvKwKA',
+    authDomain: 'pwa-online-hackathon-ae5f6.firebaseapp.com',
+    databaseURL: 'https://pwa-online-hackathon-ae5f6.firebaseio.com',
+    projectId: 'pwa-online-hackathon-ae5f6',
+    storageBucket: 'pwa-online-hackathon-ae5f6.appspot.com',
+    messagingSenderId: '390428073562',
+  },
+  firebaseScoreRef,
+  firebaseAuth,
+  firebaseDatabase;
 
 /* ================================================================ Firebase
 */
 
-firebase.initializeApp(firebaseConfig);
+function firebaseCheck() {
+  if (!window.firebase || !(firebase.app instanceof Function) || !firebase.app().options) {
+    console.log('please import Firebase SDK, and config it')
+  }
+}
+
+function firebaseInit() {
+  firebaseAuth = firebase.auth();
+  firebaseDatabase = firebase.database();
+  firebaseAuth.onAuthStateChanged(firebaseOnAuthStateChanged);
+}
+
+function firebaseSignIn() {
+  var provider = new firebase.auth.GoogleAuthProvider();
+  firebaseAuth.signInWithPopup(provider);
+}
+
+function firebaseSignOut() {
+  firebaseAuth.signOut();
+}
+
+/* ================================================================ Firebase listener
+*/
+
+// triggers auth state change
+// e.g. user signs-in or signs-out
+function firebaseOnAuthStateChanged(user) {
+  if (user) {
+    // update UI
+    var userAvatarUrl = user.photoURL || appDefault.userAvatarUrl;
+    var userDisplayName = user.displayName;
+
+    eleUserAvatar.style.backgroundImage = 'url(' + userAvatarUrl + ')';
+    eleUserDisplayName.textContent = userDisplayName;
+    eleUserAvatar.removeAttribute('hidden');
+    eleUserDisplayName.removeAttribute('hidden');
+    eleSignOutButton.removeAttribute('hidden');
+    eleSignInButton.setAttribute('hidden', true);
+
+  } else {
+    // update UI
+    eleUserAvatar.setAttribute('hidden', 'true');
+    eleUserDisplayName.setAttribute('hidden', 'true');
+    eleSignOutButton.setAttribute('hidden', 'true');
+    eleSignInButton.removeAttribute('hidden');
+  }
+}
 
 /* ================================================================ Weather
 */
@@ -126,6 +183,16 @@ function handleClick(e) {
   }
 }
 
+function onSignInButtonClicked(e) {
+  e.preventDefault();
+  firebaseSignIn();
+}
+
+function onSignOutButtonClicked(e) {
+  e.preventDefault();
+  firebaseSignOut();
+}
+
 // https://davidwalsh.name/javascript-debounce-function
 // https://css-tricks.com/debouncing-throttling-explained-examples/
 // https://stackoverflow.com/questions/1248081/get-the-browser-viewport-dimensions-with-javascript
@@ -134,6 +201,13 @@ window.addEventListener('resize', _.debounce(function() {
 }, 200));
 
 /* ================================================================ Game util
+function initListener() {
+
+  // sign-in, sign-out
+  eleSignInButton.addEventListener('click', onSignInButtonClicked);
+  eleSignOutButton.addEventListener('click', onSignOutButtonClicked);
+}
+
 */
 
 // resize
@@ -209,6 +283,14 @@ function boot() {
   updateCanvasSize();
   document.body.appendChild(c);
   c.style.backgroundColor = '#505050';
+
+  // app UI
+  initListener();
+
+  // firebase
+  firebase.initializeApp(firebaseConfig);
+  firebaseCheck();
+  firebaseInit();
 }
 
 function create() {
