@@ -59,17 +59,17 @@ gulp.task('script', function () {
       suffix: '.min'
     }))
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('dist/js'));
+    .pipe(gulp.dest('./dist/js'));
 });
 
 gulp.task('image', function () {
   return gulp.src(imageFiles)
-    .pipe(gulp.dest('dist/image'));
+    .pipe(gulp.dest('./dist/image'));
 });
 
 gulp.task('sound', function () {
   return gulp.src(soundFiles)
-    .pipe(gulp.dest('dist/sound'));
+    .pipe(gulp.dest('./dist/sound'));
 });
 
 gulp.task('html', function() {
