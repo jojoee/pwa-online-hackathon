@@ -262,3 +262,50 @@ class PointEffect extends GameEntityInterface {
     ctx.fillText('+' + this.point, this.pos.x, this.pos.y);
   }
 }
+
+/* ================================================================ Message
+*/
+
+class GameMessage extends GameEntityInterface {
+
+  constructor(name) {
+    super(0, 0);
+    this.opacity = 1;
+    this.state = this.stateKey.stable;
+
+    // specific
+    this.name = name;
+    this.text = '';
+  }
+
+  updatePosition(x, y) {
+    this.pos.x = x;
+    this.pos.y = y;
+  }
+
+  update(dt) {
+    super.update(dt);
+  }
+
+  render() {
+    super.render();
+    ctx.font = 'bold 16px Monospace';
+    ctx.fillStyle = 'rgba(180, 180, 180, ' + this.opacity + ')';
+    ctx.textAlign = 'left';
+    ctx.fillText(this.name + ' says: ' + this.text, this.pos.x, this.pos.y);
+  }
+}
+
+class StarLordMessage extends GameMessage {
+
+  constructor() {
+    super('Galaxy');
+    this.updatePosition();
+  }
+
+  updatePosition() {
+    var x = 10,
+      y = height - 10;
+    super.updatePosition(x, y);
+  }
+}

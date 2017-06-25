@@ -1,4 +1,4 @@
-/* global Position, _, GameEntity, chance, Meteor, StarWeather, BombEffect, PointEffect, Util, firebase */
+/* global Position, _, GameEntity, chance, Meteor, StarWeather, BombEffect, PointEffect, Util, firebase, StarLordMessage, GalaxyMessage */
 /* eslint no-unused-vars: 0 */
 
 // Engine required
@@ -21,6 +21,11 @@ const isDebug = false,
 // Game animation support
 var weatherEntities = [],
   effectEntities = [];
+
+// Game behavior support
+var starLordMessage = new StarLordMessage(),
+  // receive text from notification
+  galaxyMessage = new GalaxyMessage();
 
 // Game var
 var meteors = [],
@@ -327,6 +332,10 @@ function updateCanvasSize() {
   // change weather + update timestamp
   changeWeather();
   timestamp.weather = Util.getCurrentUtcTimestamp();
+
+  // message
+  starLordMessage.updatePosition();
+  galaxyMessage.updatePosition();
 }
 
 function gameLog(a, b = null) {
@@ -476,6 +485,10 @@ function update(dt) {
     }
   }
 
+  // message
+  starLordMessage.update();
+  galaxyMessage.update();
+
   // randomly spam meteor
   // @todo increase spam rate / spam range's width / speed by with player score
   if (!isGameOver) {
@@ -516,6 +529,10 @@ function render(dt) {
   for (i = 0; i < effectEntities.length; i++) {
     effectEntities[i].render();
   }
+
+  // message
+  starLordMessage.render();
+  galaxyMessage.render();
 
   // meta
   renderMeta(fps);
