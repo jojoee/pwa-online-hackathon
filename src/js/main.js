@@ -1,4 +1,4 @@
-/* global Position, _, GameEntity, chance, Meteor, StarWeather, BombEffect, Util, firebase */
+/* global Position, _, GameEntity, chance, Meteor, StarWeather, BombEffect, PointEffect, Util, firebase */
 /* eslint no-unused-vars: 0 */
 
 // Engine required
@@ -255,8 +255,10 @@ function onCanvasClicked(e) {
     resetGame();
 
   } else {
-    var entity = new BombEffect(mousePos.x, mousePos.y, killRadius);
-    effectEntities.push(entity);
+    var bombEntity = new BombEffect(mousePos.x, mousePos.y, killRadius),
+      pointEntity = new PointEffect(1);
+    effectEntities.push(bombEntity);
+    effectEntities.push(pointEntity);
 
     for (i = 0; i < meteors.length; i++) {
       var dist = Util.getDistance(meteors[i].pos, mousePos);

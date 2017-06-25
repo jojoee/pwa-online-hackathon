@@ -234,3 +234,31 @@ class BombEffect extends GameEntityInterface {
     ctx.fill();
   }
 }
+
+class PointEffect extends GameEntityInterface {
+
+  constructor(point) {
+    var x = width / 2,
+      y = 122;
+
+    super(x, y);
+    this.opacity = 1;
+    this.state = this.stateKey.fadeOut;
+
+    // specific
+    this.point = point;
+  }
+
+  update(dt) {
+    super.update();
+    this.pos.y -= 1;
+  }
+
+  render() {
+    super.render();
+    ctx.font = 'bold 16px Monospace';
+    ctx.fillStyle = 'rgba(238, 255, 35, ' + this.opacity + ')';
+    ctx.textAlign = 'left';
+    ctx.fillText('+' + this.point, this.pos.x, this.pos.y);
+  }
+}
