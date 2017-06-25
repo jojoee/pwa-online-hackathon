@@ -110,6 +110,31 @@ function firebaseRequestNotificationsPermissions() {
     });
 };
 
+function firebaseIsUserSignedIn() {
+  if (firebaseAuth.currentUser) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function firebaseSaveHighScore() {
+  if (userData.highScore && firebaseIsUserSignedIn()) {
+    var user = firebaseAuth.currentUser;
+
+    firebaseScoreRef.child(user.uid).set({
+      highScore: userData.highScore,
+      ts: Util.getCurrentUtcTimestamp(),
+    }).then(function() {
+      // @todo notify user
+      console.log('highScore has been saved', userData.highScore);
+    })
+    .catch(function(error) {
+      console.error('unable push score to database', error);
+    });
+  }
+};
+
 /* ================================================================ Firebase listener
 */
 
@@ -120,6 +145,8 @@ function firebaseOnMessage(payload) {
 // triggers auth state change
 // e.g. user signs-in or signs-out
 function firebaseOnAuthStateChanged(user) {
+  console.log('user', user);
+
   if (user) {
     // update UI
     var userAvatarUrl = user.photoURL || appDefault.userAvatarUrl;
@@ -131,6 +158,27 @@ function firebaseOnAuthStateChanged(user) {
     eleUserDisplayName.removeAttribute('hidden');
     eleSignOutButton.removeAttribute('hidden');
     eleSignInButton.setAttribute('hidden', true);
+
+    firebaseScoreRef.child(user.uid)
+      .once('value')
+      .then(function(snapshot) {
+        var val = snapshot.val();
+
+        if (val) {
+          console.log('get user score', val);
+          userData.highScore = (userData.highScore > val.highScore)
+            ? userData.highScore
+            : val.highScore;
+        } else {
+          console.log('get user score: no data');
+        }
+      })
+      .catch(function(error) {
+        console.error('unable get score to database', error);
+      });
+
+    // save FCM
+    firebaseSaveFcmToken();
 
   } else {
     // update UI
@@ -377,6 +425,11 @@ function update(dt) {
         userData.highScore = (score > userData.highScore)
           ? score
           : userData.highScore;
+
+        // save into firebase db
+        if (firebaseIsUserSignedIn()) {
+          firebaseSaveHighScore();
+        }
       }
     }
   }
