@@ -60,11 +60,28 @@ class Util {
     return Date.now();
   }
 
+  /**
+   * Get random integer number
+   *
+   * @see https://stackoverflow.com/questions/1527803/generating-random-whole-numbers-in-javascript-in-a-specific-range
+   *
+   * @param {number} min
+   * @param {number} max
+   * @returns {number} integer number
+   */
   static getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-  static getRandomBoolean(likelihood) {
+  /**
+   * Get random boolean with likelihood
+   *
+   * @see https://stackoverflow.com/questions/36756331/js-generate-random-boolean
+   *
+   * @param {number} [likelihood=100]
+   * @returns {boolean}
+   */
+  static getRandomBoolean(likelihood = 100) {
     return Math.random() <= (likelihood / 100);
   }
 };
