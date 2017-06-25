@@ -57,6 +57,8 @@ var starLordMessage = new StarLordMessage(),
 var meteors = [],
   isGameOver = false,
   isScreenshake = false,
+  isStart = true, // hack flag
+  isPause = false, // hack flag
   life,
   score,
   userData = {
@@ -237,17 +239,17 @@ function addStarWeather() {
       {
         starSpeed: 0.015,
         starRadius: 0.4,
-        nStars: 120,
+        nStars: 80,
       },
       {
         starSpeed: 0.03,
         starRadius: 1,
-        nStars: 50,
+        nStars: 40,
       },
       {
         starSpeed: 0.05,
         starRadius: 1.5,
-        nStars: 30,
+        nStars: 20,
       }
     ];
 
@@ -289,7 +291,12 @@ function onCanvasClicked(e) {
     killRadius = 120,
     i = 0;
 
-  if (isGameOver) {
+  // hack
+  // need to check
+  if (isPause) {
+    isPause = false;
+
+  } else if (isGameOver) {
     resetGame();
 
   } else {
@@ -385,7 +392,11 @@ function renderGameOverScreen() {
   var metaX = width / 2,
     metaY = 120;
 
-  // render
+  // overlay
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+  ctx.fillRect(0, 0, width, height);
+
+  // text
   ctx.font = 'bold 16px Monospace';
   ctx.fillStyle = '#fff';
   ctx.textAlign = 'center';
@@ -394,7 +405,22 @@ function renderGameOverScreen() {
   ctx.fillText('score: ' + score, width / 2, metaY += 16);
 }
 
-function renderMeta(fps) {
+function renderGameStartScreen() {
+  var metaX = width / 2,
+    metaY = 120;
+
+  // overlay
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+  ctx.fillRect(0, 0, width, height);
+
+  // text
+  ctx.font = 'bold 16px Monospace';
+  ctx.fillStyle = '#fff';
+  ctx.textAlign = 'center';
+  ctx.fillText('Tab to play', metaX, metaY += 16);
+}
+
+function renderMeta(fps = 0) {
   var metaX = 10,
     metaY = 50;
 
@@ -450,9 +476,15 @@ function boot() {
 
 function create() {
   this.resetGame();
+
+  // start screen
 }
 
 function update(dt) {
+  // hack
+  // @todo add this flag into Engine (for performance)
+  if (isPause) return;
+
   var i = 0,
     j = 0,
     utc = Util.getCurrentUtcTimestamp();
@@ -535,11 +567,11 @@ function update(dt) {
   // randomly spam meteor
   // @todo increase spam rate / spam range's width / speed by with player score
   if (!isGameOver) {
-    if (chance.bool({ likelihood: 1 })) {
+    if (chance.bool({ likelihood: 20 })) {
       var x = chance.integer({ min: 0.8 * width, max: 1.2 * width }),
         y = chance.integer({ min: -0.2 * height, max: 0 }),
         meteor = new Meteor(x, y),
-        mag = chance.integer({ min: 5, max: 10 }),
+        mag = chance.integer({ min: 10, max: 30 }),
         rad = Util.getRadian(new Position(x, -(height + y)));
 
       meteor.setVelByMag(mag);
@@ -550,9 +582,21 @@ function update(dt) {
 }
 
 function render(dt) {
+  // hack
+  // @todo add this flag into Engine (for performance)
+  // logic should not be here
+  if (isStart) {
+    isStart = false;
+    isPause = true;
+    ctx.clearRect(0, 0, c.width, c.height);
+    renderMeta();
+    renderGameStartScreen();
+    return;
+  } else if (isPause) {
+    return;
+  }
+
   var fps = (1 / dt).toFixed(2),
-    metaX = 10,
-    metaY = 120,
     i = 0;
 
   // clear
@@ -582,10 +626,6 @@ function render(dt) {
 
   // game over
   if (isGameOver) {
-    // render overlay screen
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
-    ctx.fillRect(0, 0, width, height);
-
     renderGameOverScreen();
   }
 }
