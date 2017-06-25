@@ -16,7 +16,6 @@
   ],
   "dependencies": {
     "HTML5-Reset": "^2.1.3",
-    "lodash": "^4.17.4",
     "chance": "^1.0.10",
     "howler.js": "howler#^2.0.4",
     "firebase": "^4.1.3"

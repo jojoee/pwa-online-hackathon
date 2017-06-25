@@ -1,4 +1,4 @@
-/* global Position, _, GameEntity, chance, Meteor, StarWeather, BombEffect, PointEffect, Util, firebase, StarLordMessage, GalaxyMessage, Howl */
+/* global Position, GameEntity, chance, Meteor, StarWeather, BombEffect, PointEffect, Util, firebase, StarLordMessage, GalaxyMessage, Howl */
 /* eslint no-unused-vars: 0 */
 
 // Engine required
@@ -338,7 +338,7 @@ function initListener() {
   // https://davidwalsh.name/javascript-debounce-function
   // https://css-tricks.com/debouncing-throttling-explained-examples/
   // https://stackoverflow.com/questions/1248081/get-the-browser-viewport-dimensions-with-javascript
-  window.addEventListener('resize', _.debounce(function() {
+  window.addEventListener('resize', debounce(function() {
     // hack (tmp fix)
     if (isPause) return;
     updateCanvasSize();
@@ -386,6 +386,27 @@ function gameError(a, b = null) {
   if (!isDebug) return;
   console.error(a, b);
 }
+
+/* ================================================================ Util
+*/
+
+// https://davidwalsh.name/javascript-debounce-function
+function debounce(func, wait, immediate) {
+  var timeout;
+
+  return function() {
+    var context = this, args = arguments;
+    var later = function() {
+      timeout = null;
+      if (!immediate) func.apply(context, args);
+    };
+
+    var callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (callNow) func.apply(context, args);
+  };
+};
 
 /* ================================================================ Game render
 */
