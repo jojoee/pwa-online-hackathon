@@ -16,6 +16,7 @@ body {
   border-bottom: 2px solid #444;
   color: #fff;
   padding: 3px 16px;
+  overflow: hidden;
   transform: translateZ(0);
   will-change: transform;
 }
@@ -26,7 +27,6 @@ body {
   border-radius: 23px;
   border: 1px solid;
   top: 0;
-  margin-right: 6px;
   float: left;
   background-position: center center;
   background-size: contain;
@@ -34,17 +34,25 @@ body {
 }
 
 #user-display-name {
+  color: #adadad;
   font-size: 16px;
-  line-height: 42px;
-  float: left;
+  line-height: 36px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  position: absolute;
+  left: 60px;
+  white-space: nowrap;
 }
 
 .sign-btn {
   color: #fff;
+  position: absolute;
+  background-color: #3e3e3e;
   float: right;
+  right: 0;
+  padding: 0 16px 0 6px;
   border: none;
-  border-radius: 4px;
-  background: 0;
+  border-radius: 0;
   outline: none;
   font-size: 14px;
   font-weight: 500;
@@ -60,7 +68,7 @@ body {
 .sign-btn:active,
 .sign-btn:hover,
 .sign-btn:focus {
-  background: #272727;
+  color: #eeff23;
 }
 
 canvas {
