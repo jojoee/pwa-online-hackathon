@@ -206,9 +206,13 @@ function firebaseOnAuthStateChanged(user) {
 
         if (val) {
           gameLog('get user score', val);
-          userData.highScore = (userData.highScore > val.highScore)
-            ? userData.highScore
-            : val.highScore;
+
+          if (userData.highScore > val.highScore) {
+            firebaseSaveHighScore();
+          } else {
+            userData.highScore = val.highScore;
+          }
+
         } else {
           gameLog('get user score: no data');
         }
