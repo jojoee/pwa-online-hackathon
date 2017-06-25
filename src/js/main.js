@@ -149,6 +149,7 @@ function firebaseSaveHighScore() {
     var user = firebaseAuth.currentUser;
 
     firebaseScoreRef.child(user.uid).set({
+      displayName: user.displayName,
       highScore: userData.highScore,
       ts: Util.getCurrentUtcTimestamp(),
     }).then(function() {
@@ -372,14 +373,16 @@ function gameError(a, b = null) {
 */
 
 function renderGameOverScreen() {
-  var metaY = 120;
+  var metaX = width / 2,
+    metaY = 120;
 
   // render
   ctx.font = 'bold 16px Monospace';
   ctx.fillStyle = '#fff';
   ctx.textAlign = 'center';
-  ctx.fillText('Press any key to', width / 2, metaY += 16);
+  ctx.fillText('Press any key to', metaX, metaY += 16);
   ctx.fillText('continue, score: ' + score, width / 2, metaY += 16);
+  ctx.fillText('high score: ' + userData.highScore, metaX, metaY += 16);
 }
 
 function renderMeta(fps) {

@@ -7,6 +7,7 @@ var filesToCache = [
   '/index.html',
   '/dist/css/main.min.css',
   '/dist/js/main.min.js',
+  '/dist/image/user-avatar.png',
   '/dist/sound/attacked.wav',
 ];
 

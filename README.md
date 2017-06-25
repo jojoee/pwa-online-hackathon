@@ -10,16 +10,15 @@ Kill all Star lord's meteor
 ## Checklist
 - [x] code on [GitHub](https://github.com/jojoee/pwa-online-hackathon)
 - [x] host on [Firebase hosting](https://pwa-online-hackathon-ae5f6.firebaseapp.com/)
-- [ ] Firebase login API
-- [ ] Firebase realtime database API
-- [ ] Firebase notification API
+- [x] Firebase login API
+- [x] Firebase realtime database API
+- [x] Firebase notification API
 - [ ] using Geolocation API
 - [x] add to home screen + splash screen
 - [x] work offline
 - [x] Lighthouse score more then 98
 
 ## Future update
-- [ ] Firebase: storage
 - [ ] Firebase: update security rules
 - [ ] test: browser compatibility
 - [ ] test: UI
@@ -32,11 +31,13 @@ Kill all Star lord's meteor
 - [ ] localization
 - [ ] design: improve mobile UX
 - [ ] automated script: resize app icon image
-- [ ] refactor: rewrite project with ES7 standard and compile to ES5 for frontend
+- [ ] refactor: refactor and rewrite project with ES7 standard and compile to ES5 for frontend
 - [ ] move game engine to another repository
 - [ ] Docker support
-- [ ] code formatter by [Prettier](https://github.com/prettier/prettier)
 - [ ] add `test`, `htmlhint`, `stylelint` into `dev` npm script
+- [ ] remove all debug
+- [ ] complete DocBlockr
+- [ ] firebase: deploy only `dist` folder
 
 ## Game
 - [ ] play as guest / or login via Google

@@ -311,7 +311,7 @@ class GameMessage extends GameEntityInterface {
 class StarLordMessage extends GameMessage {
 
   constructor() {
-    super('Galaxy');
+    super('Star lord');
     this.updatePosition();
   }
 
