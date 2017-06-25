@@ -66,6 +66,20 @@ class GameEntityInterface {
     }
   }
 
+  setVelByRad(rad) {
+    var mag = Util.getMagnitude(this.vel);
+
+    this.vel.x = Math.cos(rad) * mag;
+    this.vel.y = Math.sin(rad) * mag;
+  }
+
+  setVelByMag(mag) {
+    var rad = Util.getRadian(this.vel);
+
+    this.vel.x = Math.cos(rad) * mag;
+    this.vel.y = Math.sin(rad) * mag;
+  }
+
   fadeOut() {
     this.state = this.stateKey.fadeOut;
   }
@@ -83,38 +97,10 @@ class GameEntityInterface {
   }
 }
 
-/* ================================================================ Star
+/* ================================================================ Weather
 */
 
-// @todo this should be interface
-class StarInterface extends GameEntityInterface {
-
-  constructor(x, y) {
-    super(x, y);
-    this.opacity = 0;
-    this.state = this.stateKey.stable;
-  }
-
-  update(dt) {
-    super.update(dt);
-  }
-
-  setVelByRad(rad) {
-    var mag = Util.getMagnitude(this.vel);
-
-    this.vel.x = Math.cos(rad) * mag;
-    this.vel.y = Math.sin(rad) * mag;
-  }
-
-  setVelByMag(mag) {
-    var rad = Util.getRadian(this.vel);
-
-    this.vel.x = Math.cos(rad) * mag;
-    this.vel.y = Math.sin(rad) * mag;
-  }
-}
-
-class Star extends StarInterface {
+class StarWeather extends GameEntityInterface {
 
   constructor() {
     var x = chance.integer({ min: 0, max: width }),
@@ -148,7 +134,10 @@ class Star extends StarInterface {
   }
 }
 
-class Meteor extends StarInterface {
+/* ================================================================ Main
+*/
+
+class Meteor extends GameEntityInterface {
 
   constructor(x, y) {
     super(x, y);
@@ -221,7 +210,7 @@ class Meteor extends StarInterface {
 /* ================================================================ Effect
 */
 
-class Bomb extends GameEntityInterface {
+class BombEffect extends GameEntityInterface {
 
   constructor(x, y, radius) {
     super(x, y);

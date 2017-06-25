@@ -1,4 +1,4 @@
-/* global Position, _, GameEntity, chance, Meteor, Star, Bomb, Util, firebase */
+/* global Position, _, GameEntity, chance, Meteor, StarWeather, BombEffect, Util, firebase */
 /* eslint no-unused-vars: 0 */
 
 // Engine required
@@ -74,7 +74,7 @@ function addStarWeather() {
     var layer = starLayers[j];
 
     for (i = 0; i < layer.nStars; i++) {
-      var entity = new Star();
+      var entity = new StarWeather();
 
       entity.radius = layer.starRadius;
       entity.setVelByMag(layer.starSpeed);
@@ -111,7 +111,7 @@ function handleClick(e) {
     resetGame();
 
   } else {
-    var entity = new Bomb(mousePos.x, mousePos.y, killRadius);
+    var entity = new BombEffect(mousePos.x, mousePos.y, killRadius);
     effectEntities.push(entity);
 
     for (i = 0; i < meteors.length; i++) {
