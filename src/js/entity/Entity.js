@@ -21,7 +21,7 @@ class Vector extends Position {
 */
 
 // @todo this should be interface
-class GameEntity {
+class GameEntityInterface {
 
   constructor(x, y) {
     this.pos = new Position(x, y);
@@ -87,7 +87,7 @@ class GameEntity {
 */
 
 // @todo this should be interface
-class StarEntity extends GameEntity {
+class StarInterface extends GameEntityInterface {
 
   constructor(x, y) {
     super(x, y);
@@ -114,7 +114,7 @@ class StarEntity extends GameEntity {
   }
 }
 
-class Star extends StarEntity {
+class Star extends StarInterface {
 
   constructor() {
     var x = chance.integer({ min: 0, max: width }),
@@ -148,7 +148,7 @@ class Star extends StarEntity {
   }
 }
 
-class Meteor extends StarEntity {
+class Meteor extends StarInterface {
 
   constructor(x, y) {
     super(x, y);
@@ -221,7 +221,7 @@ class Meteor extends StarEntity {
 /* ================================================================ Effect
 */
 
-class Bomb extends GameEntity {
+class Bomb extends GameEntityInterface {
 
   constructor(x, y, radius) {
     super(x, y);
