@@ -3,6 +3,12 @@ var gulp = require('gulp'),
   rename = require('gulp-rename'),
   cssmin = require('gulp-cssmin'),
   minify = require('gulp-minify'), // eslint-disable-line
+  inlinesource = require('gulp-inline-source'),
+  runSequence = require('run-sequence'),
+  replace = require('gulp-replace'),
+  fs = require('fs'),
+  inject = require('gulp-inject'),
+  htmlmin = require('gulp-htmlmin'),
   sourcemaps = require('gulp-sourcemaps');
 
 var styleFiles = [
@@ -68,12 +74,30 @@ gulp.task('sound', function () {
     .pipe(gulp.dest('dist/sound'));
 });
 
+gulp.task('html', function() {
+  return gulp.src('./index.html')
+    .pipe(inlinesource())
+    .pipe(htmlmin({
+      collapseWhitespace: true
+    }))
+    .pipe(rename({
+      suffix: '.min'
+    }))
+    .pipe(gulp.dest('./'));
+})
+
 gulp.task('watch', function () {
   gulp.watch('./src/css/**/*.css', ['style']);
   gulp.watch('./src/js/**/*.js', ['script']);
+  gulp.watch('./index.html', ['html']);
   gulp.watch(imageFiles, ['image']);
   gulp.watch(soundFiles, ['sound']);
 });
 
-gulp.task('build', ['style', 'script', 'image', 'sound']);
+gulp.task('build', function() {
+  runSequence(
+    ['style', 'script', 'image', 'sound'],
+    'html'
+  );
+});
 gulp.task('default', ['build', 'watch']);
