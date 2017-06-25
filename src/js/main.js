@@ -157,7 +157,7 @@ function changeWeather() {
 /* ================================================================ Listener
 */
 
-function handleClick(e) {
+function onCanvasClicked(e) {
   var cX = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft - c.offsetLeft,
     cY = e.clientY + document.body.scrollTop + document.documentElement.scrollTop - c.offsetTop,
     mousePos = new Position(cX, cY),
@@ -201,6 +201,8 @@ window.addEventListener('resize', _.debounce(function() {
 }, 200));
 
 function initListener() {
+  // canvas
+  c.addEventListener('click', onCanvasClicked);
 
   // sign-in, sign-out
   eleSignInButton.addEventListener('click', onSignInButtonClicked);
@@ -294,10 +296,7 @@ function boot() {
 }
 
 function create() {
-  var i = 0;
-
   this.resetGame();
-  c.addEventListener('click', handleClick);
 }
 
 function update(dt) {
