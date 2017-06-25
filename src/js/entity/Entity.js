@@ -238,8 +238,8 @@ class BombEffect extends GameEntityInterface {
 class PointEffect extends GameEntityInterface {
 
   constructor(point) {
-    var x = width / 2,
-      y = 122;
+    var x = (width / 2) + chance.integer({ min: -10, max: 10 }),
+      y = 162;
 
     super(x, y);
     this.opacity = 1;

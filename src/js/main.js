@@ -9,13 +9,13 @@ var c = document.createElement('canvas'),
   assetUrls = [];
 
 // Game const
-const isDebug = true,
+const isDebug = false,
   appDefault = {
     userAvatarUrl: '/dist/image/user-avatar.png',
   },
   delay = {
     weather: 10000,
-    screenshake: 100,
+    screenshake: 50,
   };
 
 // Game animation support
@@ -307,11 +307,9 @@ function initListener() {
 function resetGame() {
   meteors = [];
   isGameOver = false;
-  life = 1;
+  life = 10;
   score = 0;
-  timestamp = {
-    weather: Util.getCurrentUtcTimestamp() - delay.weather,
-  };
+  timestamp.weather = Util.getCurrentUtcTimestamp() - delay.weather;
 }
 
 /* ================================================================ Game misc
@@ -345,7 +343,7 @@ function gameError(a, b = null) {
 */
 
 function renderGameOverScreen() {
-  var metaY = 100;
+  var metaY = 120;
 
   // render
   ctx.font = 'bold 16px Monospace';
@@ -370,7 +368,7 @@ function renderMeta(fps) {
 
   ctx.font = 'bold 16px Monospace';
   ctx.fillStyle = '#fff';
-  ctx.textAlign = 'start';
+  ctx.textAlign = 'left';
   ctx.fillText('life: ' + life, metaX, metaY += 16);
   ctx.fillText('score: ' + score, metaX, metaY += 16);
   ctx.fillText('high score: ' + userData.highScore, metaX, metaY += 16);
