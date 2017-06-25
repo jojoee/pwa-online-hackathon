@@ -14,31 +14,27 @@ Kill all Star lord's meteor
 - [x] Firebase login API
 - [x] Firebase realtime database API
 - [x] Firebase notification API
-- [ ] using Geolocation API
 - [x] add to home screen + splash screen
 - [x] work offline
 - [x] Lighthouse score more then 98
 
 ## Future update
-- [ ] Firebase: update security rules
-- [ ] test: browser compatibility
-- [ ] test: UI
-- [ ] test: complete unit test
-- [ ] test: increase coverage threshold
+- [ ] automated test: browser compatibility
+- [ ] automated test: UI
+- [ ] automated test: complete unit test
+- [ ] automated test: increase coverage threshold
+- [ ] automated script: resize app icon image
+- [ ] automated script: inject js content into html
 - [ ] CI: another build by [AppVeyor](http://appveyor.com/)
 - [ ] CI: browser testing by [testling](https://ci.testling.com/)
 - [ ] CI: dependency checker by david-dm.org
 - [ ] CI: another dependency checker by [Greenkeeper](https://greenkeeper.io/)
-- [ ] localization
-- [ ] design: improve mobile UX
-- [ ] automated script: resize app icon image
 - [ ] refactor: refactor and rewrite project with ES7 standard and compile to ES5 for frontend
-- [ ] move game engine to another repository
+- [ ] refactor: move game engine to another repository
+- [ ] localization
 - [ ] Docker support
 - [ ] add `test`, `htmlhint`, `stylelint` into `dev` npm script
-- [ ] remove all debug
 - [ ] complete DocBlockr
-- [ ] firebase: deploy only `dist` folder
 
 ## Game
 - [x] play as guest / or login via Google
@@ -61,13 +57,6 @@ $ yarn validate
 $ lighthouse http://localhost:5000 --verbose --view --output-path=./lighthouse/result.html
 $ yarn commit # instead of git commit
 
-```
-
-## Getting started for owner
-```
-$ firebase login
-$ firebase init
-$ firebase deploy # to deploy on Firebase hosting
 ```
 
 ## Reference
