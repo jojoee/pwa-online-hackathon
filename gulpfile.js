@@ -16,7 +16,6 @@ var styleFiles = [
     './src/css/main.css',
   ],
   scriptFiles = [
-    './bower_components/chance/dist/chance.min.js',
     './bower_components/howler.js/dist/howler.core.min.js',
     './bower_components/firebase/firebase-app.js',
     './bower_components/firebase/firebase-auth.js',

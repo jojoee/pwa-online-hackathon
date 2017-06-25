@@ -1,4 +1,4 @@
-/* global Position, GameEntity, chance, Meteor, StarWeather, BombEffect, PointEffect, Util, firebase, StarLordMessage, GalaxyMessage, Howl */
+/* global Position, GameEntity, Meteor, StarWeather, BombEffect, PointEffect, Util, firebase, StarLordMessage, GalaxyMessage, Howl */
 /* eslint no-unused-vars: 0 */
 
 // Engine required
@@ -449,8 +449,8 @@ function renderMeta(fps = 0) {
 
   // partial screenshake technique
   if (isScreenshake) {
-    var dx = chance.integer({ min: -5, max: 5 }),
-      dy = chance.integer({ min: -5, max: 5 });
+    var dx = Util.getRandomInt(-5, 5),
+      dy = Util.getRandomInt(-5, 5);
 
     metaX += dx;
     metaY += dy;
@@ -528,7 +528,7 @@ function update(dt) {
   // update weather
   // message
   if (utc > timestamp.starLordMessage + delay.starLordMessage) {
-    var msgIndex = chance.integer({ min: 0, max: starLordMessages.length - 1 }),
+    var msgIndex = Util.getRandomInt(0, starLordMessages.length - 1),
       msg = starLordMessages[msgIndex];
 
     starLordMessage.echo(msg);
@@ -590,11 +590,11 @@ function update(dt) {
   // randomly spam meteor
   // @todo increase spam rate / spam range's width / speed by with player score
   if (!isGameOver) {
-    if (chance.bool({ likelihood: 20 })) {
-      var x = chance.integer({ min: 0.8 * width, max: 1.2 * width }),
-        y = chance.integer({ min: -0.2 * height, max: 0 }),
+    if (Util.getRandomBoolean(20)) {
+      var x = Util.getRandomInt(0.8 * width, 1.2 * width),
+        y = Util.getRandomInt(-0.2 * height, 0),
         meteor = new Meteor(x, y),
-        mag = chance.integer({ min: 10, max: 30 }),
+        mag = Util.getRandomInt(10, 30),
         rad = Util.getRadian(new Position(x, -(height + y)));
 
       meteor.setVelByMag(mag);

@@ -59,6 +59,14 @@ class Util {
   static getCurrentUtcTimestamp() {
     return Date.now();
   }
+
+  static getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  static getRandomBoolean(likelihood) {
+    return Math.random() <= (likelihood / 100);
+  }
 };
 
 // hack

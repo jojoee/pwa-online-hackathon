@@ -1,4 +1,4 @@
-/* global width, height, ctx, chance, Util */
+/* global width, height, ctx, Util */
 /* eslint no-unused-vars: 0 */
 
 class Position {
@@ -103,8 +103,8 @@ class GameEntityInterface {
 class StarWeather extends GameEntityInterface {
 
   constructor() {
-    var x = chance.integer({ min: 0, max: width }),
-      y = chance.integer({ min: 0, max: height });
+    var x = Util.getRandomInt(0, width),
+      y = Util.getRandomInt(0, height);
 
     super(x, y);
     this.opacity = 0;
@@ -238,7 +238,7 @@ class BombEffect extends GameEntityInterface {
 class PointEffect extends GameEntityInterface {
 
   constructor(point) {
-    var x = (width / 2) + chance.integer({ min: -10, max: 10 }),
+    var x = (width / 2) + Util.getRandomInt(-10, 10),
       y = 162;
 
     super(x, y);
