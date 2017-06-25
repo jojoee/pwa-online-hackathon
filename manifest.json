@@ -36,7 +36,7 @@
     "sizes": "256x256",
     "type": "image/png"
   }, {
-    "src": "dist/image/touch/homescreen256.png",
+    "src": "/dist/image/touch/homescreen512.png",
     "sizes": "512x512",
     "type": "image/png"
   }],
