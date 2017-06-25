@@ -40,19 +40,12 @@ Kill all Star lord's meteor
 - [ ] firebase: deploy only `dist` folder
 
 ## Game
-- [ ] play as guest / or login via Google
-- [x] update game canvas when resize
-- [x] update logo
-- [ ] bgm
-- [ ] sfx
-- [ ] scores
-- [ ] tutorial
-- [ ] leader board
-- [ ] firebase: deploy only `dist` folder
+- [x] play as guest / or login via Google
+- [x] support viewport resizing
 
 ```
-theme color: #eeff23
-background color: #505050
+theme color: #eeff23 (238, 255, 35)
+background color: #505050 (80, 80, 80)
 ```
 
 ## Getting started
@@ -62,11 +55,11 @@ background color: #505050
 4. Start dev: `firebase serve` and `yarn dev`
 
 ```
-Before commit please run command below to check
-- `yarn validate`
-- `lighthouse http://localhost:5000 --verbose --view --output-path=./lighthouse/result.html`
+$ # Before commit please run command below to check
+$ yarn validate
+$ lighthouse http://localhost:5000 --verbose --view --output-path=./lighthouse/result.html
+$ yarn commit # instead of git commit
 
-and commit with `yarn commit` instead of git commit
 ```
 
 ## Getting started for owner
@@ -89,3 +82,4 @@ $ firebase deploy # to deploy on Firebase hosting
 - [GoogleChrome/lighthouse](https://github.com/GoogleChrome/lighthouse)
 - [GoogleChrome/workbox](https://github.com/googlechrome/workbox)
 - [GoogleChrome/sw-toolbox](https://github.com/GoogleChrome/sw-toolbox)
+- [Bfxr.  Make sound effects for your games.](http://www.bfxr.net/)
