@@ -8,6 +8,8 @@
 
 Kill all Star lord's meteor
 
+[Consolation prize](https://www.facebook.com/web.developer.th/photos/a.1753499484976901.1073741828.1753451068315076/1878784592448389/?type=3) from [PWA Online Hackathon](https://pwa.online.hackathon.in.th/), also I write article the event here [PWA Online hackathon: ประสบการณ์ การเข้าร่วม และ การพัฒนา](https://medium.com/@jojoee/pwa-online-hackathon-ประสบการณ์-การเข้าร่วม-และ-การพัฒนา-281e454fdff6)
+
 ## Checklist
 - [x] code on [GitHub](https://github.com/jojoee/pwa-online-hackathon)
 - [x] host on [Firebase hosting](https://pwa-online-hackathon-ae5f6.firebaseapp.com/)
