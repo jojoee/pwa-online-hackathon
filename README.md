@@ -4,7 +4,7 @@
 [![Codecov](https://img.shields.io/codecov/c/github/jojoee/pwa-online-hackathon.svg)](https://codecov.io/github/jojoee/pwa-online-hackathon)
 [![License](https://img.shields.io/github/license/mashape/apistatus.svg)](http://opensource.org/licenses/MIT)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
-[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) [![Greenkeeper badge](https://badges.greenkeeper.io/jojoee/pwa-online-hackathon.svg)](https://greenkeeper.io/)
 
 Kill all Star lord's meteor
 
